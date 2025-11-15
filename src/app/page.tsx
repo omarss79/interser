@@ -1,66 +1,61 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
 
-export default function Home() {
+import Link from 'next/link';
+
+export default function HomePage() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className='min-h-screen'>
+      <div className='container mx-auto px-4 py-16'>
+        <div className='text-center space-y-8'>
+          <div className='space-y-4'>
+            <h1 className='text-5xl font-bold text-primary'>Supabase Auth</h1>
+            <h2 className='text-3xl font-semibold'>Guía Definitiva</h2>
+          </div>
+          <div className='mt-12 p-6 bg-base-100 rounded-lg shadow-lg max-w-2xl mx-auto'>
+            <h3 className='text-lg font-semibold mb-4'>
+              Todo lo que puedes hacer con Supabase Auth
+            </h3>
+            <div className='grid sm:grid-cols-2 gap-3 text-sm'>
+              <Link
+                href='/register'
+                className='link link-info'
+              >
+                • Crear Cuenta con Email y Contraseña 📩
+              </Link>
+              <Link
+                href='/login'
+                className='link link-info'
+              >
+                • Login con Email y Contraseña 📩
+              </Link>
+              <Link
+                href='/magic-link'
+                className='link link-info'
+              >
+                • Login con Magic Links ✨
+              </Link>
+              <Link
+                href='/otp-sms'
+                className='link link-info'
+              >
+                • Login con OTP por SMS 📱
+              </Link>
+              <Link
+                href='/oauth'
+                className='link link-info'
+              >
+                • Login con OAuth Providers 🗝️
+              </Link>
+              <Link
+                href='/reset-password'
+                className='link link-info'
+              >
+                • Olvidé mi contraseña 🔃
+              </Link>
+            </div>
+          </div>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </div>
     </div>
   );
 }
