@@ -1,0 +1,24 @@
+// .iconSocialMedia {
+//   width: 100%;
+//   height: 100%;
+//   display: block; /* Asegura que no haya espacios extra */
+// }
+
+.iconSocialMedia {
+  // Contenedor (<a>)
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  //   background-color: #25d366 !important; // ¡Usa !important si Bootstrap es muy agresivo!
+  //   border-color: #25d366 !important;
+
+  // Icono (<svg>)
+  svg {
+    width: 60%;
+    height: 60%;
+    // color: white;
+  }
+}
