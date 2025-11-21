@@ -1,24 +1,13 @@
 import ArrowUp from "@/components/ArrowUp";
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import type { Metadata } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
-
-// import "./globals.css";
-import "../scss/globals.scss";
 import Copyright from "@/components/Copyright";
-
-//
-
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+import Topbar from "@/components/Topbar";
+import Navbar from "@/components/Navbar";
+import type { Metadata } from "next";
+import "../scss/globals.scss";
+import Script from "next/script";
+import "owl.carousel/dist/assets/owl.carousel.min.css";
+import "owl.carousel/dist/assets/owl.theme.default.min.css";
 
 export const metadata: Metadata = {
   title: "Interser - Centro Psicoterapeutico Humanista",
@@ -72,20 +61,57 @@ export default function RootLayout({
       </head>
 
       <body>
-        <Header />
+        <Topbar />
+        <Navbar />
         {children}
         <Footer />
         <Copyright />
         <ArrowUp />
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <Script
+          src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"
+          strategy="beforeInteractive" // Carga el script antes de que el código de React se ejecute
+          id="jquery-script"
+        />
+        <Script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+          strategy="beforeInteractive" // Carga el script antes de que el código de React se ejecute
+          id="jquery-script"
+        />
+        <Script
+          src="lib/wow/wow.min.js"
+          strategy="beforeInteractive" // Carga el script antes de que el código de React se ejecute
+          id="jquery-script"
+        />
+        <Script
+          src="lib/easing/easing.min.js"
+          strategy="beforeInteractive" // Carga el script antes de que el código de React se ejecute
+          id="jquery-script"
+        />
+        <Script
+          src="lib/waypoints/waypoints.min.js"
+          strategy="beforeInteractive" // Carga el script antes de que el código de React se ejecute
+          id="jquery-script"
+        />
+        <Script
+          src="lib/owlcarousel/owl.carousel.min.js"
+          strategy="beforeInteractive" // Carga el script antes de que el código de React se ejecute
+          id="jquery-script"
+        />
+
+        {/* <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> */}
+        {/* <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="lib/wow/wow.min.js"></script>
         <script src="lib/easing/easing.min.js"></script>
         <script src="lib/waypoints/waypoints.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script> */}
 
-        <script src="js/main.js"></script>
+        <Script
+          src="js/main.js"
+          strategy="beforeInteractive" // Carga el script antes de que el código de React se ejecute
+          id="jquery-script"
+        />
+        {/* <script src="js/main.js"></script> */}
       </body>
     </html>
   );

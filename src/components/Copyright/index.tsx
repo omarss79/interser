@@ -10,10 +10,10 @@ const Copyright = () => {
           <div className="col-md-6 text-center text-md-start mb-md-0">
             <span className="text-white">
               <a href="#">
-                <i className="fas fa-copyright text-light me-2"></i>Your Site
-                Name
-              </a>
-              , All right reserved.
+                <i className="fas fa-copyright text-light me-2"></i>Interser -
+                Centro Psicoterapeutico Humanista
+              </a>{" "}
+              - Todos los derechos reservados.
             </span>
           </div>
           <div className="col-md-6 text-center text-md-end text-white">
