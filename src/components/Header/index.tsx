@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Spinnaker } from "next/font/google";
 import Link from "next/link";
@@ -87,13 +89,16 @@ const Header = () => {
               <a href="service.html" className="nav-item nav-link">
                 Services
               </a>
+              <a href="contact.html" className="nav-item nav-link">
+                Contacto
+              </a>
               <div className="nav-item dropdown">
                 <a
                   href="#"
                   className="nav-link dropdown-toggle"
                   data-bs-toggle="dropdown"
                 >
-                  Pages
+                  Iniciar sesión
                 </a>
                 <div className="dropdown-menu m-0">
                   <a href="appointment.html" className="dropdown-item">
@@ -116,16 +121,13 @@ const Header = () => {
                   </a>
                 </div>
               </div>
-              <a href="contact.html" className="nav-item nav-link">
-                Contacto
-              </a>
             </div>
-            <a
+            {/* <a
               href="#"
               className="btn btn-primary rounded-pill text-white py-2 px-4 flex-wrap flex-sm-shrink-0"
             >
               Book Appointment
-            </a>
+            </a> */}
           </div>
         </nav>
       </div>

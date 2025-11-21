@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import InitialSpinner from "@/lib/features/InitialSpinner";
 

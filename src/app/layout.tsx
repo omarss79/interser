@@ -1,19 +1,24 @@
 import ArrowUp from "@/components/ArrowUp";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Toaster } from "react-hot-toast";
+// import { Geist, Geist_Mono } from "next/font/google";
+
 // import "./globals.css";
+import "../scss/globals.scss";
+import Copyright from "@/components/Copyright";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+//
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
+
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
 
 export const metadata: Metadata = {
   title: "Interser - Centro Psicoterapeutico Humanista",
@@ -69,6 +74,8 @@ export default function RootLayout({
       <body>
         <Header />
         {children}
+        <Footer />
+        <Copyright />
         <ArrowUp />
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
