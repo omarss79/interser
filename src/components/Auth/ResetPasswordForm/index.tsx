@@ -1,19 +1,19 @@
 "use client";
 
-import React, { useState } from 'react';
-import toast from 'react-hot-toast';
-import { createClient } from '@/supabase/client';
-import { z } from 'zod';
+import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { createClient } from "@/supabase/client";
+import { z } from "zod";
 
 const schema = z.object({
-  email: z.string().email('Correo inválido'),
+  email: z.string().email("Correo inválido"),
 });
 
 type Errors = Partial<Record<string, string>>;
 
 export default function ResetPasswordForm() {
   const supabase = createClient();
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
 
@@ -25,7 +25,8 @@ export default function ResetPasswordForm() {
     if (!result.success) {
       const fld: Errors = {};
       result.error.issues.forEach((issue) => {
-        if (issue.path && issue.path.length) fld[issue.path[0] as string] = issue.message;
+        if (issue.path && issue.path.length)
+          fld[issue.path[0] as string] = issue.message;
       });
       setErrors(fld);
       return;
@@ -37,26 +38,30 @@ export default function ResetPasswordForm() {
       const { data, error } = await supabase.auth.resetPasswordForEmail(email);
       setLoading(false);
       if (error) {
-        toast.error(error.message || 'Error al solicitar el enlace');
+        toast.error(error.message || "Error al solicitar el enlace");
         return;
       }
 
-      toast.success('Si existe ese correo, recibirás un enlace para restablecer tu contraseña.');
+      toast.success(
+        "Si existe ese correo, recibirás un enlace para restablecer tu contraseña."
+      );
     } catch (err: any) {
       setLoading(false);
-      toast.error(err?.message || 'Error inesperado');
+      toast.error(err?.message || "Error inesperado");
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="card p-4 shadow-sm">
       <div className="mb-3">
-        <label htmlFor="email" className="form-label">Correo</label>
+        <label htmlFor="email" className="form-label">
+          Correo
+        </label>
         <input
           id="email"
           name="email"
           type="email"
-          className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+          className={`form-control ${errors.email ? "is-invalid" : ""}`}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -65,8 +70,13 @@ export default function ResetPasswordForm() {
         {errors.email && <div className="invalid-feedback">{errors.email}</div>}
       </div>
 
-      <button className="btn btn-primary w-100" type="submit" disabled={loading} aria-busy={loading}>
-        {loading ? 'Enviando...' : 'Enviar enlace de recuperación'}
+      <button
+        className="btn btn-primary w-100"
+        type="submit"
+        disabled={loading}
+        aria-busy={loading}
+      >
+        {loading ? "Enviando..." : "Enviar enlace de recuperación"}
       </button>
     </form>
   );

@@ -1,9 +1,9 @@
-import type { Metadata } from 'next';
-import ResetPasswordForm from '@/components/Auth/ResetPasswordForm';
+import type { Metadata } from "next";
+import ResetPasswordForm from "@/components/Auth/ResetPasswordForm";
 
 export const metadata: Metadata = {
-  title: 'Recuperar contraseña - Interser',
-  description: 'Solicitar enlace para recuperar contraseña',
+  title: "Recuperar contraseña - Interser",
+  description: "Solicitar enlace para recuperar contraseña",
 };
 
 export default function ResetPasswordPage() {

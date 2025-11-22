@@ -78,7 +78,7 @@ export default function LoginForm() {
           id="email"
           name="email"
           type="email"
-          className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+          className={`form-control ${errors.email ? "is-invalid" : ""}`}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -96,14 +96,16 @@ export default function LoginForm() {
           id="password"
           name="password"
           type="password"
-          className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+          className={`form-control ${errors.password ? "is-invalid" : ""}`}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
           autoComplete="current-password"
           aria-required="true"
         />
-        {errors.password && <div className="invalid-feedback">{errors.password}</div>}
+        {errors.password && (
+          <div className="invalid-feedback">{errors.password}</div>
+        )}
       </div>
 
       <div className="d-flex justify-content-between align-items-center mb-3">
