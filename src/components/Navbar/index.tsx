@@ -2,9 +2,11 @@
 
 import React from "react";
 import styles from "./navbar.module.scss";
+import { usePathname } from "next/navigation";
 import Carousel from "./components/Carousel";
 
 const Navbar = () => {
+  const pathname = usePathname();
   return (
     <>
       <div className="container-fluid position-relative p-0">
@@ -67,7 +69,7 @@ const Navbar = () => {
           </div>
         </nav>
       </div>
-      <Carousel />
+      {pathname === "/" && <Carousel />}
     </>
   );
 };
