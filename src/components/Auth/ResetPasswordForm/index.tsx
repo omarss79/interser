@@ -35,7 +35,11 @@ export default function ResetPasswordForm() {
     setLoading(true);
     try {
       // Supabase v2: resetPasswordForEmail(email, { redirectTo })
-      const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+      // Redirect to a dedicated update-password page that will consume the tokens
+      const redirectTo = `${window.location.origin}/update-password`;
+      const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo,
+      });
       setLoading(false);
       if (error) {
         toast.error(error.message || "Error al solicitar el enlace");
