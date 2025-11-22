@@ -4,6 +4,7 @@ import React from "react";
 import styles from "./navbar.module.scss";
 import { usePathname } from "next/navigation";
 import Carousel from "./components/Carousel";
+import AuthMenu from "./AuthMenu";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -36,35 +37,7 @@ const Navbar = () => {
               <a href="contact.html" className="nav-item nav-link">
                 Contacto
               </a>
-              <div className="nav-item dropdown">
-                <a
-                  href="#"
-                  className="nav-link dropdown-toggle"
-                  data-bs-toggle="dropdown"
-                >
-                  Iniciar sesión
-                </a>
-                <div className="dropdown-menu m-0">
-                  <a href="appointment.html" className="dropdown-item">
-                    Appointment
-                  </a>
-                  <a href="feature.html" className="dropdown-item">
-                    Features
-                  </a>
-                  <a href="blog.html" className="dropdown-item">
-                    Our Blog
-                  </a>
-                  <a href="team.html" className="dropdown-item">
-                    Our Team
-                  </a>
-                  <a href="testimonial.html" className="dropdown-item">
-                    Testimonial
-                  </a>
-                  <a href="404.html" className="dropdown-item">
-                    404 Page
-                  </a>
-                </div>
-              </div>
+              <AuthMenu />
             </div>
           </div>
         </nav>
