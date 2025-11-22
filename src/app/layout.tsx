@@ -70,33 +70,33 @@ export default function RootLayout({
 
         <Script
           src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"
-          strategy="beforeInteractive" // Carga el script antes de que el código de React se ejecute
+          strategy="afterInteractive"
           id="jquery-script"
         />
         <Script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
-          strategy="beforeInteractive" // Carga el script antes de que el código de React se ejecute
-          id="jquery-script"
+          strategy="afterInteractive"
+          id="bootstrap-script"
         />
         <Script
           src="lib/wow/wow.min.js"
-          strategy="beforeInteractive" // Carga el script antes de que el código de React se ejecute
-          id="jquery-script"
+          strategy="afterInteractive"
+          id="wow-script"
         />
         <Script
           src="lib/easing/easing.min.js"
-          strategy="beforeInteractive" // Carga el script antes de que el código de React se ejecute
-          id="jquery-script"
+          strategy="afterInteractive"
+          id="easing-script"
         />
         <Script
           src="lib/waypoints/waypoints.min.js"
-          strategy="beforeInteractive" // Carga el script antes de que el código de React se ejecute
-          id="jquery-script"
+          strategy="afterInteractive"
+          id="waypoints-script"
         />
         <Script
           src="lib/owlcarousel/owl.carousel.min.js"
-          strategy="beforeInteractive" // Carga el script antes de que el código de React se ejecute
-          id="jquery-script"
+          strategy="afterInteractive"
+          id="owl-script"
         />
 
         {/* <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> */}
@@ -106,11 +106,7 @@ export default function RootLayout({
         <script src="lib/waypoints/waypoints.min.js"></script>
         <script src="lib/owlcarousel/owl.carousel.min.js"></script> */}
 
-        <Script
-          src="js/main.js"
-          strategy="beforeInteractive" // Carga el script antes de que el código de React se ejecute
-          id="jquery-script"
-        />
+        <Script src="js/main.js" strategy="afterInteractive" id="main-script" />
         {/* <script src="js/main.js"></script> */}
       </body>
     </html>

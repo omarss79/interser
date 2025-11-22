@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import styles from "./header.module.scss";
+import styles from "./navbar.module.scss";
 import Carousel from "./components/Carousel";
 
 const Navbar = () => {
