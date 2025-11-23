@@ -15,7 +15,10 @@ export default async function DashboardPage() {
 
   // Prefer a visible bordered container and a small top margin so nothing is hidden
   return (
-    <main className="container py-4 mt-3 border rounded" style={{ borderColor: '#e0e0e0' }}>
+    <main
+      className="container py-4 mt-3 border rounded"
+      style={{ borderColor: "#e0e0e0" }}
+    >
       <h1 className="mb-3">Dashboard</h1>
       {!user ? (
         <div>
@@ -31,16 +34,27 @@ export default async function DashboardPage() {
           {/* Prefer display name from user metadata when available */}
           {(() => {
             const meta = (user && user.user_metadata) || {};
-            const displayName = meta.full_name || meta.name || meta.first_name || user.email || user.id;
+            const displayName =
+              meta.full_name ||
+              meta.name ||
+              meta.first_name ||
+              user.email ||
+              user.id;
             return (
-              <p>Bienvenido, <strong>{displayName}</strong></p>
+              <p>
+                Bienvenido, <strong>{displayName}</strong>
+              </p>
             );
           })()}
           <p className="mb-3">ID: {user.id}</p>
           <p className="mb-3">Rol: {user.role ?? "-"}</p>
           <div className="d-flex gap-2 align-items-center">
-            <Link href="/profile" className="btn btn-secondary">Perfil</Link>
-            <Link href="/update-password" className="btn btn-outline-secondary">Cambiar contraseña</Link>
+            <Link href="/profile" className="btn btn-secondary">
+              Perfil
+            </Link>
+            <Link href="/update-password" className="btn btn-outline-secondary">
+              Cambiar contraseña
+            </Link>
             <SignOutButton />
           </div>
         </div>

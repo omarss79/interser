@@ -13,7 +13,8 @@ export default function SignOutButton() {
       await supabase.auth.signOut();
       router.replace("/");
     } catch (err) {
-      if (process.env.NODE_ENV === "development") console.error("Sign out error", err);
+      if (process.env.NODE_ENV === "development")
+        console.error("Sign out error", err);
       try {
         window.location.href = "/";
       } catch {}
