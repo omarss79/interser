@@ -2,6 +2,7 @@
 
 import React from "react";
 import styles from "./navbar.module.scss";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Carousel from "./components/Carousel";
 import AuthMenu from "./AuthMenu";
@@ -34,9 +35,9 @@ const Navbar = () => {
               <a href="service.html" className="nav-item nav-link">
                 Services
               </a>
-              <a href="contact.html" className="nav-item nav-link">
+              <Link href="/contact" className="nav-item nav-link">
                 Contacto
-              </a>
+              </Link>
               <AuthMenu />
             </div>
           </div>

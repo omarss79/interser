@@ -320,6 +320,64 @@
     display: none;
   }
 }
+
+/* Page offset utility to avoid content being hidden under absolute/fixed navbar */
+.page-offset {
+  padding-top: 4rem; /* default for small screens */
+}
+
+@media (min-width: 992px) {
+  .page-offset {
+    padding-top: 6.5rem; /* desktop: space for larger navbar */
+  }
+}
+
+/* Contact page hero/banner */
+.contact-hero {
+  width: 100%;
+  height: 260px;
+  border-radius: 6px 6px 0 0;
+  background-image: url("https://images.unsplash.com/photo-1554774853-aa9a29bcdc5c?auto=format&fit=crop&w=1400&q=60");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.12));
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 2rem;
+}
+
+.contact-hero-title {
+  color: #fff;
+  font-size: 1.75rem;
+  font-weight: 600;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-width: 576px) {
+  .contact-hero {
+    height: 160px;
+  }
+  .contact-hero-title {
+    font-size: 1.25rem;
+    padding-right: 1rem;
+  }
+}
+/* Desktop-specific spacing for contact page title */
+@media (min-width: 992px) {
+  .contact-title,
+  .contact-title,
+  .summary-title {
+    margin-top: 30px;
+  }
+}
 /*** Carousel Hero Header Start ***/
 .header-carousel {
   position: relative;
