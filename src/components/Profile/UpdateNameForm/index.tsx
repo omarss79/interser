@@ -37,7 +37,9 @@ export default function UpdateNameForm({ initialName = "" }: Props) {
 
       // Update both metadata fields for compatibility with different schemas
       const updateData = { full_name: trimmed, name: trimmed };
-      const { error } = await supabase.auth.updateUser({ data: updateData } as any);
+      const { error } = await supabase.auth.updateUser({
+        data: updateData,
+      } as any);
       if (error) {
         setError(error.message || "Error al actualizar el nombre");
       } else {

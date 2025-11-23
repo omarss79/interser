@@ -1,7 +1,6 @@
 import React from "react";
 import { createClient } from "@/supabase/server";
 import { redirect } from "next/navigation";
-import Link from "next/link";
 import UpdateNameForm from "@/components/Profile/UpdateNameForm";
 
 export default async function ProfilePage() {
@@ -23,7 +22,10 @@ export default async function ProfilePage() {
   const displayName = meta.full_name || meta.name || meta.first_name || "";
 
   return (
-    <main className="container py-4 mt-3 border rounded" style={{ borderColor: "#e0e0e0" }}>
+    <main
+      className="container py-4 mt-3 border rounded"
+      style={{ borderColor: "#e0e0e0" }}
+    >
       <h1 className="mb-3">Perfil</h1>
       <p className="mb-3">ID: {user.id}</p>
       <p className="mb-3">Email: {user.email}</p>
