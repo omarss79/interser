@@ -29,9 +29,9 @@ const Navbar = () => {
               <a href="/" className="nav-item nav-link active">
                 Inicio
               </a>
-              <a href="about.html" className="nav-item nav-link">
-                About
-              </a>
+              <Link href="/acerca-de-interser" className="nav-item nav-link">
+                Acerca de InterSer
+              </Link>
               <a href="service.html" className="nav-item nav-link">
                 Services
               </a>
