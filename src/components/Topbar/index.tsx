@@ -30,10 +30,6 @@ const Topbar = () => {
               <i className="fas fa-phone-alt text-primary me-2"></i>
               6671792487
             </a>
-            {/* <a href="#" className="text-light me-0">
-                <i className="fas fa-envelope text-primary me-2"></i>
-                Example@gmail.com
-              </a> */}
           </div>
         </div>
         <div className="col-lg-4 text-center text-lg-end">

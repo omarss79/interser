@@ -1,115 +1,67 @@
 "use client";
 
+import {
+  faFacebookF,
+  faInstagram,
+  faWhatsapp,
+} from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import styles from "react-day-picker/style.css";
 
 const Footer = () => {
   return (
     <div className="container-fluid footer py-5 fadeIn" data-wow-delay="0.2s">
       <div className="container py-5">
         <div className="row g-5">
-          <div className="col-md-6 col-lg-6 col-xl-3">
+          <div className="col-md-9 col-lg-9 col-xl-9">
             <div className="footer-item d-flex flex-column">
               <h4 className="text-white mb-4">
                 <i className="fas fa-star-of-life me-3"></i>Terapia
               </h4>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Delectus dolorem impedit eos autem dolores laudantium quia, qui
-                similique
+                Acompañamos a personas, parejas y familias desde un enfoque
+                humanista, Gestalt y sexológico, brindando atención profesional
+                para ansiedad, depresión, duelos, relaciones de pareja,
+                identidad y sexualidad, procesos de vida y bienestar emocional.
+                Nuestro equipo cuenta con amplia formación académica,
+                experiencia clínica y actualización constante, ofreciendo
+                terapia presencial en Culiacán y atención psicológica en línea
+                con calidez, ética y confianza.
               </p>
               <div className="d-flex align-items-center">
                 <i className="fas fa-share fa-2x text-white me-2"></i>
                 <a
+                  href="https://www.facebook.com/interserculiacan"
                   className="btn-square btn btn-primary text-white rounded-circle mx-1"
-                  href=""
                 >
-                  <i className="fab fa-facebook-f"></i>
+                  <FontAwesomeIcon icon={faFacebookF} />
                 </a>
                 <a
+                  href="https://www.instagram.com/interser_psicoterapia/"
                   className="btn-square btn btn-primary text-white rounded-circle mx-1"
-                  href=""
                 >
-                  <i className="fab fa-twitter"></i>
+                  <FontAwesomeIcon icon={faInstagram} />
                 </a>
                 <a
+                  href="https://api.whatsapp.com/send/?phone=5216671792487&text=%C2%A1%C2%A1Hola%21%21+Deseo+informes+de+sus+servicios+psicoterapeuticos.&type=phone_number&app_absent=0"
                   className="btn-square btn btn-primary text-white rounded-circle mx-1"
-                  href=""
                 >
-                  <i className="fab fa-instagram"></i>
-                </a>
-                <a
-                  className="btn-square btn btn-primary text-white rounded-circle mx-1"
-                  href=""
-                >
-                  <i className="fab fa-linkedin-in"></i>
+                  <FontAwesomeIcon icon={faWhatsapp} />
                 </a>
               </div>
             </div>
           </div>
-          <div className="col-md-6 col-lg-6 col-xl-3">
+          <div className="col-md-3 col-lg-3 col-xl-3">
             <div className="footer-item d-flex flex-column">
-              <h4 className="mb-4 text-white">Quick Links</h4>
+              <h4 className="mb-4 text-white">Información de contacto</h4>
               <a href="">
-                <i className="fas fa-angle-right me-2"></i> About Us
+                <i className="fa fa-map-marker-alt me-2"></i> Municipio de
+                Culiacan 2673, Fraccionamiento Floresta, 80014 Culiacán Rosales,
+                Sin.
               </a>
-              <a href="">
-                <i className="fas fa-angle-right me-2"></i> Contact Us
-              </a>
-              <a href="">
-                <i className="fas fa-angle-right me-2"></i> Privacy Policy
-              </a>
-              <a href="">
-                <i className="fas fa-angle-right me-2"></i> Terms & Conditions
-              </a>
-              <a href="">
-                <i className="fas fa-angle-right me-2"></i> Our Blog & News
-              </a>
-              <a href="">
-                <i className="fas fa-angle-right me-2"></i> Our Team
-              </a>
-            </div>
-          </div>
-          <div className="col-md-6 col-lg-6 col-xl-3">
-            <div className="footer-item d-flex flex-column">
-              <h4 className="mb-4 text-white">Terapia Services</h4>
-              <a href="">
-                <i className="fas fa-angle-right me-2"></i> All Services
-              </a>
-              <a href="">
-                <i className="fas fa-angle-right me-2"></i> Physiotherapy
-              </a>
-              <a href="">
-                <i className="fas fa-angle-right me-2"></i> Diagnostics
-              </a>
-              <a href="">
-                <i className="fas fa-angle-right me-2"></i> Manual Therapy
-              </a>
-              <a href="">
-                <i className="fas fa-angle-right me-2"></i> Massage Therapy
-              </a>
-              <a href="">
-                <i className="fas fa-angle-right me-2"></i> Rehabilitation
-              </a>
-            </div>
-          </div>
-          <div className="col-md-6 col-lg-6 col-xl-3">
-            <div className="footer-item d-flex flex-column">
-              <h4 className="mb-4 text-white">Contact Info</h4>
-              <a href="">
-                <i className="fa fa-map-marker-alt me-2"></i> 123 Street, New
-                York, USA
-              </a>
-              <a href="">
-                <i className="fas fa-envelope me-2"></i> info@example.com
-              </a>
-              <a href="">
-                <i className="fas fa-envelope me-2"></i> info@example.com
-              </a>
-              <a href="">
-                <i className="fas fa-phone me-2"></i> +012 345 67890
-              </a>
-              <a href="" className="mb-3">
-                <i className="fas fa-print me-2"></i> +012 345 67890
+              <a href="tel:+526671792487">
+                <i className="fas fa-phone me-2"></i> +526671792487
               </a>
             </div>
           </div>
