@@ -32,9 +32,9 @@ const Navbar = () => {
               <Link href="/acerca-de-interser" className="nav-item nav-link">
                 Acerca de InterSer
               </Link>
-              <a href="service.html" className="nav-item nav-link">
-                Services
-              </a>
+              <Link href="/servicios" className="nav-item nav-link">
+                Servicios
+              </Link>
               <Link href="/contact" className="nav-item nav-link">
                 Contacto
               </Link>
