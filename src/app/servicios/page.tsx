@@ -107,7 +107,9 @@ export default function ServiciosPage() {
               <li>El presente y la experiencia inmediata</li>
               <li>El contacto con emociones auténticas</li>
               <li>La integración de cuerpo, emoción y pensamiento</li>
-              <li>El fortalecimiento del autoconocimiento y la responsabilidad</li>
+              <li>
+                El fortalecimiento del autoconocimiento y la responsabilidad
+              </li>
             </ul>
             <p>
               Esta terapia, realizada por psicoterapeutas con formación avanzada
@@ -136,9 +138,7 @@ export default function ServiciosPage() {
           {/* Primeros Auxilios Psicológicos */}
           <section className="mb-5">
             <h2 className="h3 mb-3">Primeros Auxilios Psicológicos (PAP)</h2>
-            <p>
-              Atención inmediata para situaciones de crisis emocional como:
-            </p>
+            <p>Atención inmediata para situaciones de crisis emocional como:</p>
             <ul>
               <li>Ataques de ansiedad</li>
               <li>Eventos traumáticos</li>
@@ -198,9 +198,7 @@ export default function ServiciosPage() {
               <li>Personas que viven fuera de Culiacán</li>
               <li>Quienes requieren flexibilidad horaria</li>
               <li>Situaciones de movilidad limitada</li>
-              <li>
-                Procesos que requieren continuidad desde cualquier lugar
-              </li>
+              <li>Procesos que requieren continuidad desde cualquier lugar</li>
             </ul>
             <p>
               Modalidad segura, privada y accesible para quienes buscan apoyo
