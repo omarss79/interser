@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { createClient } from "@/supabase/client";
 import { z } from "zod";
+import GoogleSignInButton from "@/components/Auth/GoogleSignInButton";
 
 const schema = z
   .object({
@@ -169,6 +170,18 @@ export default function RegisterForm() {
       >
         {loading ? "Creando cuenta..." : "Crear cuenta"}
       </button>
+
+      <div className="position-relative my-4">
+        <hr />
+        <span
+          className="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted small"
+          style={{ marginTop: "-0.5rem" }}
+        >
+          o
+        </span>
+      </div>
+
+      <GoogleSignInButton />
     </form>
   );
 }
