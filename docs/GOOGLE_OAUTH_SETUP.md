@@ -14,6 +14,7 @@ Para habilitar el inicio de sesión con Google, sigue estos pasos:
    - Correo de soporte: tu correo
    - Dominios autorizados: tu dominio de producción
 6. Crea las credenciales OAuth 2.0:
+
    - Tipo de aplicación: **Aplicación web**
    - Nombre: InterSer Web Client
    - **Orígenes autorizados de JavaScript:**
@@ -61,14 +62,17 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ## Solución de problemas
 
 ### Error: "redirect_uri_mismatch"
+
 - Verifica que la URI de redirección en Google Cloud Console coincida exactamente con la URL de Supabase
 - Formato correcto: `https://[PROYECTO_REF].supabase.co/auth/v1/callback`
 
 ### El usuario no es redirigido después de autenticarse
+
 - Verifica que el archivo `src/app/auth/callback/route.ts` exista
 - Revisa la consola del navegador en busca de errores
 
 ### Error: "access_denied"
+
 - El usuario canceló o rechazó el consentimiento
 - Verifica que el dominio esté autorizado en Google Cloud Console
 

@@ -19,7 +19,9 @@ export async function GET(request: Request) {
   // Exchange code for session
   if (code) {
     const supabase = await createServerClient();
-    const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+    const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(
+      code
+    );
 
     if (exchangeError) {
       console.error("Exchange code error:", exchangeError);

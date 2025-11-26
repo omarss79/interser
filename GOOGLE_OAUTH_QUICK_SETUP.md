@@ -1,6 +1,7 @@
 # Configuración Rápida - Google OAuth
 
 ## Tu Información de OAuth:
+
 - **Client ID:** `1020659238901-pab8cc1daphabpf0htntahl8ikrrieud.apps.googleusercontent.com`
 - **Client Secret:** `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`
 - **Proyecto Supabase:** `qiwifsgqmohiuwarshgi`
@@ -58,15 +59,18 @@ Haz clic en **"Continuar con Google"**
 ## Troubleshooting
 
 ### Error: "redirect_uri_mismatch"
+
 - Verifica que en Google Cloud Console, la URI sea EXACTAMENTE:
   `https://qiwifsgqmohiuwarshgi.supabase.co/auth/v1/callback`
 - No debe tener espacios, barras extras, ni diferencias en mayúsculas
 
 ### Error: "provider is not enabled"
+
 - El toggle de Google en Supabase debe estar **ON** (verde)
 - Guarda las credenciales después de activarlo
 
 ### El login funciona pero no redirige
+
 - Verifica que `/auth/callback/route.ts` exista
 - Revisa la consola del navegador en busca de errores
 
