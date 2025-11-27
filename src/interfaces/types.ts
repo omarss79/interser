@@ -2,6 +2,18 @@
 
 export type GastoEstatus = "Programado" | "Pagado" | "Comprometido";
 
+// Roles de usuario
+export type UserRole = "usuario" | "terapeuta" | "administrador";
+
+// Perfil de usuario
+export interface Profile {
+  id: string;
+  role: UserRole;
+  full_name: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 // export interface Concepto {
 //   id: string;
 //   nombre: string;

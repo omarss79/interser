@@ -64,8 +64,22 @@ export default function LoginForm() {
         return;
       }
 
-      toast.success("Sesión iniciada");
-      router.push("/dashboard");
+      // Get user profile to redirect based on role
+      if (data.user) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", data.user.id)
+          .single();
+
+        toast.success("Sesión iniciada");
+        
+        // Redirect based on role
+        const redirectUrl = profile?.role === "usuario" ? "/profile" : "/dashboard";
+        router.push(redirectUrl);
+      } else {
+        router.push("/dashboard");
+      }
     } catch (err: any) {
       setLoading(false);
       toast.error(err?.message || "Error inesperado");
