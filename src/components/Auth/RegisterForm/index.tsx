@@ -62,25 +62,49 @@ export default function RegisterForm() {
         },
       });
 
-      setLoading(false);
-
       if (error) {
+        setLoading(false);
+        console.error("SignUp error:", error);
         toast.error(error.message || "Error al crear la cuenta");
         return;
       }
 
-      if ((data as any)?.user) {
-        toast.success("Cuenta creada. Redirigiendo...");
-        router.push("/dashboard");
-        return;
-      }
+      console.log("SignUp response:", data);
 
-      toast.success(
-        "Cuenta creada. Revisa tu correo para confirmar tu cuenta."
-      );
-      router.push("/login");
+      // Successful registration
+      if (data?.user) {
+        // Check if email confirmation is required
+        if (data.user.identities && data.user.identities.length === 0) {
+          // Email confirmation required
+          setLoading(false);
+          toast.success(
+            "Cuenta creada. Revisa tu correo para confirmar tu cuenta."
+          );
+          router.push("/login");
+        } else {
+          // Auto-confirmed (email confirmation disabled in Supabase)
+          // Get user profile to redirect based on role
+          const { data: profile } = await supabase
+            .from("profiles")
+            .select("role")
+            .eq("id", data.user.id)
+            .single();
+
+          setLoading(false);
+          toast.success("Cuenta creada exitosamente");
+
+          // Redirect based on role
+          const redirectUrl =
+            profile?.role === "usuario" ? "/profile" : "/dashboard";
+          router.push(redirectUrl);
+        }
+      } else {
+        setLoading(false);
+        toast.error("Error inesperado al crear la cuenta");
+      }
     } catch (err: any) {
       setLoading(false);
+      console.error("SignUp exception:", err);
       toast.error(err?.message || "Error inesperado");
     }
   };
