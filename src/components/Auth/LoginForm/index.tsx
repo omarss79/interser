@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { createClient } from "@/supabase/client";
 import { z } from "zod";
+import GoogleSignInButton from "@/components/Auth/GoogleSignInButton";
 
 const schema = z.object({
   email: z.string().email("Correo inválido"),
@@ -16,10 +17,21 @@ type Errors = Partial<Record<string, string>>;
 export default function LoginForm() {
   const supabase = createClient();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
+
+  // Show error from URL params (e.g., from OAuth callback)
+  useEffect(() => {
+    const error = searchParams.get("error");
+    if (error) {
+      toast.error(decodeURIComponent(error));
+      // Clean URL
+      router.replace("/login");
+    }
+  }, [searchParams, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,14 +69,6 @@ export default function LoginForm() {
     } catch (err: any) {
       setLoading(false);
       toast.error(err?.message || "Error inesperado");
-    }
-  };
-
-  const handleGoogle = async () => {
-    try {
-      await supabase.auth.signInWithOAuth({ provider: "google" });
-    } catch (err: any) {
-      toast.error(err?.message || "Error OAuth");
     }
   };
 
@@ -123,15 +127,17 @@ export default function LoginForm() {
         {loading ? "Entrando..." : "Iniciar sesión"}
       </button>
 
-      <hr />
+      <div className="position-relative my-4">
+        <hr />
+        <span
+          className="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted small"
+          style={{ marginTop: "-0.5rem" }}
+        >
+          o
+        </span>
+      </div>
 
-      <button
-        type="button"
-        className="btn btn-outline-secondary w-100"
-        onClick={handleGoogle}
-      >
-        Iniciar con Google
-      </button>
+      <GoogleSignInButton />
     </form>
   );
 }

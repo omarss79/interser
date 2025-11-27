@@ -33,6 +33,10 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# Archivos con credenciales sensibles
+GOOGLE_OAUTH_QUICK_SETUP.md
+docs/GOOGLE_OAUTH_SETUP.md
+
 # vercel
 .vercel
 
