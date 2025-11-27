@@ -52,6 +52,16 @@ export default function AuthMenu() {
     }
   };
 
+  // Check if user signed in with OAuth provider (Google, etc.)
+  // Check identities array for OAuth providers (more reliable than app_metadata.provider)
+  const hasOAuthIdentity = user?.identities?.some(
+    (identity: any) =>
+      identity.provider === "google" || identity.provider !== "email"
+  );
+  const isOAuthUser =
+    hasOAuthIdentity ||
+    (user?.app_metadata?.provider && user.app_metadata.provider !== "email");
+
   // Simple menu: if no user, show link to /login; if user, show profile/change-password/sign out
   return (
     <div className="nav-item dropdown">
@@ -80,9 +90,12 @@ export default function AuthMenu() {
             <a href="/profile" className="dropdown-item">
               Perfil
             </a>
-            <a href="/update-password" className="dropdown-item">
-              Cambiar contraseña
-            </a>
+            {/* Only show "Change password" for email/password users, not OAuth users */}
+            {!isOAuthUser && (
+              <a href="/update-password" className="dropdown-item">
+                Cambiar contraseña
+              </a>
+            )}
             <div className="dropdown-divider" />
             <a href="#" onClick={handleSignOut} className="dropdown-item">
               Cerrar sesión

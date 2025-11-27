@@ -48,15 +48,35 @@ export default async function DashboardPage() {
           })()}
           <p className="mb-3">ID: {user.id}</p>
           <p className="mb-3">Rol: {user.role ?? "-"}</p>
-          <div className="d-flex gap-2 align-items-center">
-            <Link href="/profile" className="btn btn-secondary">
-              Perfil
-            </Link>
-            <Link href="/update-password" className="btn btn-outline-secondary">
-              Cambiar contraseña
-            </Link>
-            <SignOutButton />
-          </div>
+          {(() => {
+            // Check if user signed in with OAuth provider (Google, etc.)
+            const hasOAuthIdentity = user?.identities?.some(
+              (identity: any) =>
+                identity.provider === "google" || identity.provider !== "email"
+            );
+            const isOAuthUser =
+              hasOAuthIdentity ||
+              (user?.app_metadata?.provider &&
+                user.app_metadata.provider !== "email");
+
+            return (
+              <div className="d-flex gap-2 align-items-center">
+                <Link href="/profile" className="btn btn-secondary">
+                  Perfil
+                </Link>
+                {/* Only show "Change password" for email/password users, not OAuth users */}
+                {!isOAuthUser && (
+                  <Link
+                    href="/update-password"
+                    className="btn btn-outline-secondary"
+                  >
+                    Cambiar contraseña
+                  </Link>
+                )}
+                <SignOutButton />
+              </div>
+            );
+          })()}
         </div>
       )}
     </main>
