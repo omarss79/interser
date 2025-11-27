@@ -162,6 +162,12 @@ export default function RegisterForm() {
         )}
       </div>
 
+      <div className="d-flex justify-content-end align-items-center mb-3">
+        <a href="/login" className="small">
+          Iniciar sesión
+        </a>
+      </div>
+
       <button
         className="btn btn-primary w-100"
         type="submit"

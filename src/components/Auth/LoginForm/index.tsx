@@ -131,6 +131,9 @@ export default function LoginForm() {
         <a href="/reset-password" className="small">
           ¿Olvidaste tu contraseña?
         </a>
+        <a href="/register" className="small">
+          Registrarse
+        </a>
       </div>
 
       <button
