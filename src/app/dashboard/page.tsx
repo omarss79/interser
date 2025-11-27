@@ -6,9 +6,29 @@ import SignOutButton from "@/components/Dashboard/SignOutButton";
 export default async function DashboardPage() {
   const supabase = await createClient();
   let user = null;
+  let currentSessionProvider = null;
+
   try {
     const { data } = await supabase.auth.getUser();
     user = data?.user ?? null;
+
+    // Detect current session provider by checking most recent identity
+    if (user && user.identities && user.identities.length > 0) {
+      // Sort identities by last_sign_in_at (most recent first)
+      const sortedIdentities = [...user.identities].sort((a: any, b: any) => {
+        const aTime = a.last_sign_in_at
+          ? new Date(a.last_sign_in_at).getTime()
+          : 0;
+        const bTime = b.last_sign_in_at
+          ? new Date(b.last_sign_in_at).getTime()
+          : 0;
+        return bTime - aTime;
+      });
+
+      currentSessionProvider = sortedIdentities[0].provider || "email";
+    } else {
+      currentSessionProvider = "email";
+    }
   } catch (e) {
     // ignore server-side getUser errors; user remains null
   }
@@ -48,35 +68,15 @@ export default async function DashboardPage() {
           })()}
           <p className="mb-3">ID: {user.id}</p>
           <p className="mb-3">Rol: {user.role ?? "-"}</p>
-          {(() => {
-            // Check if user signed in with OAuth provider (Google, etc.)
-            const hasOAuthIdentity = user?.identities?.some(
-              (identity: any) =>
-                identity.provider === "google" || identity.provider !== "email"
-            );
-            const isOAuthUser =
-              hasOAuthIdentity ||
-              (user?.app_metadata?.provider &&
-                user.app_metadata.provider !== "email");
-
-            return (
-              <div className="d-flex gap-2 align-items-center">
-                <Link href="/profile" className="btn btn-secondary">
-                  Perfil
-                </Link>
-                {/* Only show "Change password" for email/password users, not OAuth users */}
-                {!isOAuthUser && (
-                  <Link
-                    href="/update-password"
-                    className="btn btn-outline-secondary"
-                  >
-                    Cambiar contraseña
-                  </Link>
-                )}
-                <SignOutButton />
-              </div>
-            );
-          })()}
+          <div className="d-flex gap-2 align-items-center">
+            <Link href="/profile" className="btn btn-secondary">
+              Perfil
+            </Link>
+            <Link href="/update-password" className="btn btn-outline-secondary">
+              Cambiar contraseña
+            </Link>
+            <SignOutButton />
+          </div>
         </div>
       )}
     </main>

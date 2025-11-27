@@ -7,6 +7,9 @@ import { usePathname } from "next/navigation";
 export default function AuthMenu() {
   const supabase = createClient();
   const [user, setUser] = useState<any | null>(null);
+  const [currentSessionProvider, setCurrentSessionProvider] = useState<
+    string | null
+  >(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -17,9 +20,40 @@ export default function AuthMenu() {
         const { data } = await supabase.auth.getUser();
         if (!mounted) return;
         setUser(data.user ?? null);
+
+        // Get current session to check which provider was used to sign in THIS time
+        const { data: sessionData } = await supabase.auth.getSession();
+        if (sessionData?.session && data.user) {
+          const user = data.user;
+
+          // Find the most recently used identity based on last_sign_in_at
+          let currentProvider = "email";
+
+          if (user.identities && user.identities.length > 0) {
+            // Sort identities by last_sign_in_at (most recent first)
+            const sortedIdentities = [...user.identities].sort(
+              (a: any, b: any) => {
+                const aTime = a.last_sign_in_at
+                  ? new Date(a.last_sign_in_at).getTime()
+                  : 0;
+                const bTime = b.last_sign_in_at
+                  ? new Date(b.last_sign_in_at).getTime()
+                  : 0;
+                return bTime - aTime;
+              }
+            );
+
+            // The most recent identity is the one used to sign in
+            const mostRecentIdentity = sortedIdentities[0];
+            currentProvider = mostRecentIdentity.provider || "email";
+          }
+
+          setCurrentSessionProvider(currentProvider);
+        }
       } catch (err) {
         if (process.env.NODE_ENV === "development") console.error(err);
         setUser(null);
+        setCurrentSessionProvider(null);
       }
     }
 
@@ -29,6 +63,32 @@ export default function AuthMenu() {
       (_event, session) => {
         if (!mounted) return;
         setUser(session?.user ?? null);
+
+        // Update current session provider when auth state changes
+        if (session && session.user) {
+          const user = session.user;
+          let currentProvider = "email";
+
+          if (user.identities && user.identities.length > 0) {
+            const sortedIdentities = [...user.identities].sort(
+              (a: any, b: any) => {
+                const aTime = a.last_sign_in_at
+                  ? new Date(a.last_sign_in_at).getTime()
+                  : 0;
+                const bTime = b.last_sign_in_at
+                  ? new Date(b.last_sign_in_at).getTime()
+                  : 0;
+                return bTime - aTime;
+              }
+            );
+
+            currentProvider = sortedIdentities[0].provider || "email";
+          }
+
+          setCurrentSessionProvider(currentProvider);
+        } else {
+          setCurrentSessionProvider(null);
+        }
       }
     );
 
@@ -52,15 +112,9 @@ export default function AuthMenu() {
     }
   };
 
-  // Check if user signed in with OAuth provider (Google, etc.)
-  // Check identities array for OAuth providers (more reliable than app_metadata.provider)
-  const hasOAuthIdentity = user?.identities?.some(
-    (identity: any) =>
-      identity.provider === "google" || identity.provider !== "email"
-  );
-  const isOAuthUser =
-    hasOAuthIdentity ||
-    (user?.app_metadata?.provider && user.app_metadata.provider !== "email");
+  // Check if user signed in with OAuth provider in THIS session
+  // This allows users with both identities to change password when logged in via email
+  const isOAuthSession = currentSessionProvider === "google";
 
   // Simple menu: if no user, show link to /login; if user, show profile/change-password/sign out
   return (
@@ -90,13 +144,10 @@ export default function AuthMenu() {
             <a href="/profile" className="dropdown-item">
               Perfil
             </a>
-            {/* Only show "Change password" for email/password users, not OAuth users */}
-            {!isOAuthUser && (
-              <a href="/update-password" className="dropdown-item">
-                Cambiar contraseña
-              </a>
-            )}
-            <div className="dropdown-divider" />
+            <a href="/update-password" className="dropdown-item">
+              Cambiar contraseña
+            </a>
+            <hr className="dropdown-divider" />
             <a href="#" onClick={handleSignOut} className="dropdown-item">
               Cerrar sesión
             </a>
