@@ -73,9 +73,10 @@ export default function LoginForm() {
           .single();
 
         toast.success("Sesión iniciada");
-        
+
         // Redirect based on role
-        const redirectUrl = profile?.role === "usuario" ? "/profile" : "/dashboard";
+        const redirectUrl =
+          profile?.role === "usuario" ? "/profile" : "/dashboard";
         router.push(redirectUrl);
       } else {
         router.push("/dashboard");

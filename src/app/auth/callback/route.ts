@@ -33,7 +33,7 @@ export async function GET(request: Request) {
 
     // Get user profile to determine redirect based on role
     const profile = await getProfile();
-    const redirectUrl = profile 
+    const redirectUrl = profile
       ? getRedirectUrlByRole(profile.role)
       : "/dashboard"; // fallback
 

@@ -7,8 +7,10 @@ import type { Profile } from "@/interfaces/types";
 export async function getProfile(): Promise<Profile | null> {
   try {
     const supabase = await createClient();
-    
-    const { data: { user } } = await supabase.auth.getUser();
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return null;
 
     const { data: profile, error } = await supabase

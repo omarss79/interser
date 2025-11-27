@@ -13,7 +13,7 @@ export default async function DashboardPage() {
   try {
     const { data } = await supabase.auth.getUser();
     user = data?.user ?? null;
-    
+
     // Get user profile with role
     if (user) {
       profile = await getProfile();
@@ -57,7 +57,10 @@ export default async function DashboardPage() {
           })()}
           <p className="mb-3">ID: {user.id}</p>
           <p className="mb-3">
-            Rol: <span className="badge bg-primary">{profile?.role ?? "usuario"}</span>
+            Rol:{" "}
+            <span className="badge bg-primary">
+              {profile?.role ?? "usuario"}
+            </span>
           </p>
           <div className="d-flex gap-2 align-items-center">
             <Link href="/profile" className="btn btn-secondary">
