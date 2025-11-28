@@ -64,8 +64,23 @@ export default function LoginForm() {
         return;
       }
 
-      toast.success("Sesión iniciada");
-      router.push("/dashboard");
+      // Get user profile to redirect based on role
+      if (data.user) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", data.user.id)
+          .single();
+
+        toast.success("Sesión iniciada");
+
+        // Redirect based on role
+        const redirectUrl =
+          profile?.role === "usuario" ? "/profile" : "/dashboard";
+        router.push(redirectUrl);
+      } else {
+        router.push("/dashboard");
+      }
     } catch (err: any) {
       setLoading(false);
       toast.error(err?.message || "Error inesperado");
@@ -115,6 +130,9 @@ export default function LoginForm() {
       <div className="d-flex justify-content-between align-items-center mb-3">
         <a href="/reset-password" className="small">
           ¿Olvidaste tu contraseña?
+        </a>
+        <a href="/register" className="small">
+          Registrarse
         </a>
       </div>
 

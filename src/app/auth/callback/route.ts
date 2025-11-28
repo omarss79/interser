@@ -1,5 +1,6 @@
 import { createClient as createServerClient } from "@/supabase/server";
 import { NextResponse } from "next/server";
+import { getProfile, getRedirectUrlByRole } from "@/utils/profile";
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
@@ -30,8 +31,13 @@ export async function GET(request: Request) {
       );
     }
 
-    // Successful authentication - redirect to dashboard
-    return NextResponse.redirect(`${origin}/dashboard`);
+    // Get user profile to determine redirect based on role
+    const profile = await getProfile();
+    const redirectUrl = profile
+      ? getRedirectUrlByRole(profile.role)
+      : "/dashboard"; // fallback
+
+    return NextResponse.redirect(`${origin}${redirectUrl}`);
   }
 
   // No code and no error - redirect to login

@@ -15,6 +15,7 @@ export default function ResetPasswordForm() {
   const supabase = createClient();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -46,6 +47,7 @@ export default function ResetPasswordForm() {
         return;
       }
 
+      setEmailSent(true);
       toast.success(
         "Si existe ese correo, recibirás un enlace para restablecer tu contraseña."
       );
@@ -77,11 +79,21 @@ export default function ResetPasswordForm() {
       <button
         className="btn btn-primary w-100"
         type="submit"
-        disabled={loading}
+        disabled={loading || emailSent}
         aria-busy={loading}
       >
-        {loading ? "Enviando..." : "Enviar enlace de recuperación"}
+        {loading
+          ? "Enviando..."
+          : emailSent
+          ? "Enlace enviado ✓"
+          : "Enviar enlace de recuperación"}
       </button>
+
+      {emailSent && (
+        <div className="alert alert-info mt-3 mb-0" role="status">
+          Revisa tu correo. Si no lo encuentras, verifica la carpeta de spam.
+        </div>
+      )}
     </form>
   );
 }
