@@ -128,48 +128,6 @@ const Carousel = () => {
           </div>
         </div>
       </div>
-
-      <div className="header-carousel-item">
-        <img src="img/carousel-2.jpg" className="img-fluid w-100" alt="Image" />
-        <div className="carousel-caption">
-          <div className="carousel-caption-content p-3">
-            <h1 className="display-1 text-white mb-4">
-              Terapia sexológica e identidad
-            </h1>
-            <p className="mb-5 fs-5">
-              “Orientación sexual, transición, disfunciones: un espacio seguro
-              sin juicio.”
-            </p>
-            <a
-              className="btn btn-primary rounded-pill text-white py-3 px-5"
-              href="#"
-            >
-              Book Appointment
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div className="header-carousel-item">
-        <img src="img/carousel-2.jpg" className="img-fluid w-100" alt="Image" />
-        <div className="carousel-caption">
-          <div className="carousel-caption-content p-3">
-            <h1 className="display-1 text-white mb-4">
-              Modalidad presencial y online
-            </h1>
-            <p className="mb-5 fs-5">
-              “Atención en Culiacán o desde cualquier lugar vía sesión en
-              línea.”
-            </p>
-            <a
-              className="btn btn-primary rounded-pill text-white py-3 px-5"
-              href="#"
-            >
-              Book Appointment
-            </a>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
