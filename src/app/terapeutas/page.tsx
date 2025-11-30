@@ -49,7 +49,7 @@ export default async function TerapeutasPage() {
                         >
                           <Image
                             src={therapist.photo_url}
-                            alt={therapist.full_name}
+                            alt={therapist.full_name || ""}
                             fill
                             className="rounded-circle"
                             style={{ objectFit: "cover" }}
@@ -61,7 +61,7 @@ export default async function TerapeutasPage() {
                           style={{ width: 200, height: 200 }}
                         >
                           <span className="text-white display-3">
-                            {therapist.full_name.charAt(0)}
+                            {therapist.full_name?.charAt(0) || "?"}
                           </span>
                         </div>
                       )}

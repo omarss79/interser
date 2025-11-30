@@ -25,6 +25,7 @@ export interface TherapistIntervention {
 }
 
 export interface TherapistProfile extends Profile {
+  slug: any;
   title: string | null;
   bio: string | null;
   photo_url: string | null;
