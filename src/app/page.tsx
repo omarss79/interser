@@ -3,6 +3,7 @@
 import InitialSpinner from "@/lib/features/InitialSpinner";
 import HandleCodeRedirect from "@/components/Auth/HandleCodeRedirect";
 import TeamSection from "@/components/TeamSection";
+import ServicesSection from "@/components/ServicesSection";
 import { getAllTherapists } from "@/utils/therapists";
 
 export default async function HomePage() {
@@ -14,6 +15,9 @@ export default async function HomePage() {
       <HandleCodeRedirect />
 
       <InitialSpinner />
+
+      {/* Services Section */}
+      <ServicesSection />
 
       {/* Team Section */}
       {therapists.length > 0 && <TeamSection therapists={therapists} />}
