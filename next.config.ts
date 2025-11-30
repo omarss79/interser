@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
         hostname: "interser.org.mx",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "digitalizate.com.mx",
+        pathname: "/**",
+      },
     ],
   },
 };
