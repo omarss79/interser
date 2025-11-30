@@ -63,10 +63,7 @@ export default function ServicesSection() {
   return (
     <div className="container-fluid feature py-5">
       <div className="container py-5">
-        <div
-          className="section-title mb-5 wow fadeInUp"
-          data-wow-delay="0.1s"
-        >
+        <div className="section-title mb-5 wow fadeInUp" data-wow-delay="0.1s">
           <div className="sub-style">
             <h4 className="sub-title px-3 mb-0">¿Por qué elegir InterSer?</h4>
           </div>
@@ -105,7 +102,10 @@ export default function ServicesSection() {
             </div>
           ))}
 
-          <div className="col-12 text-center wow fadeInUp" data-wow-delay="0.2s">
+          <div
+            className="col-12 text-center wow fadeInUp"
+            data-wow-delay="0.2s"
+          >
             <Link
               href="/servicios"
               className="btn btn-primary rounded-pill text-white py-3 px-5"
