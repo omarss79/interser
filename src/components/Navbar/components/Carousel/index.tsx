@@ -58,19 +58,12 @@ const Carousel = () => {
         <img src="img/carousel-1.jpg" className="img-fluid w-100" alt="Image" />
         <div className="carousel-caption">
           <div className="carousel-caption-content p-3">
-            <h5
-              className="text-white text-uppercase fw-bold mb-4"
-              style={{ letterSpacing: "3px" }}
-            >
-              Physiotherapy Center
-            </h5>
-            <h1 className="display-1 text-capitalize text-white mb-4">
-              Best Solution For Painful Life
+            <h1 className="display-1 text-white mb-4">
+              Bienestar Emocional Integral
             </h1>
             <p className="mb-5 fs-5">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry&apos;s standard dummy
-              text ever since the 1500s,
+              “Ansiedad, depresión, duelos… aquí te acompañamos para recuperar
+              tu equilibrio.”
             </p>
             <a
               className="btn btn-primary rounded-pill text-white py-3 px-5"
@@ -86,19 +79,74 @@ const Carousel = () => {
         <img src="img/carousel-2.jpg" className="img-fluid w-100" alt="Image" />
         <div className="carousel-caption">
           <div className="carousel-caption-content p-3">
-            <h5
-              className="text-white text-uppercase fw-bold mb-4"
-              style={{ letterSpacing: "3px" }}
-            >
-              Physiotherapy Center
-            </h5>
-            <h1 className="display-1 text-capitalize text-white mb-4">
-              Best Solution For Painful Life
+            <h1 className="display-1 text-white mb-4">
+              Terapia Gestalt & Humanista
             </h1>
             <p className="mb-5 fs-5">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry&apos;s standard dummy
-              text ever since the 1500s,
+              “Vive el aquí y ahora, reconecta con tus emociones y redescubre tu
+              autenticidad.”
+            </p>
+            <a
+              className="btn btn-primary rounded-pill text-white py-3 px-5"
+              href="#"
+            >
+              Book Appointment
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div className="header-carousel-item">
+        <img src="img/carousel-2.jpg" className="img-fluid w-100" alt="Image" />
+        <div className="carousel-caption">
+          <div className="carousel-caption-content p-3">
+            <h1 className="display-1 text-white mb-4">
+              Terapia para parejas, familias y relaciones
+            </h1>
+            <p className="mb-5 fs-5">
+              “Comunicación, vínculo y crecimiento en pareja o familia.”
+            </p>
+            <a
+              className="btn btn-primary rounded-pill text-white py-3 px-5"
+              href="#"
+            >
+              Book Appointment
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div className="header-carousel-item">
+        <img src="img/carousel-2.jpg" className="img-fluid w-100" alt="Image" />
+        <div className="carousel-caption">
+          <div className="carousel-caption-content p-3">
+            <h1 className="display-1 text-white mb-4">
+              Terapia sexológica e identidad
+            </h1>
+            <p className="mb-5 fs-5">
+              “Orientación sexual, transición, disfunciones: un espacio seguro
+              sin juicio.”
+            </p>
+            <a
+              className="btn btn-primary rounded-pill text-white py-3 px-5"
+              href="#"
+            >
+              Book Appointment
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div className="header-carousel-item">
+        <img src="img/carousel-2.jpg" className="img-fluid w-100" alt="Image" />
+        <div className="carousel-caption">
+          <div className="carousel-caption-content p-3">
+            <h1 className="display-1 text-white mb-4">
+              Modalidad presencial y online
+            </h1>
+            <p className="mb-5 fs-5">
+              “Atención en Culiacán o desde cualquier lugar vía sesión en
+              línea.”
             </p>
             <a
               className="btn btn-primary rounded-pill text-white py-3 px-5"
