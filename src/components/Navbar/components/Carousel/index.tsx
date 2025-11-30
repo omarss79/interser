@@ -66,14 +66,16 @@ const Carousel = () => {
               Bienestar Emocional Integral
             </h1>
             <p className="mb-5 fs-5">
-              “Ansiedad, depresión, duelos… aquí te acompañamos para recuperar
-              tu equilibrio.”
+              "Ansiedad, depresión, duelos… aquí te acompañamos para recuperar
+              tu equilibrio."
             </p>
             <a
               className="btn btn-primary rounded-pill text-white py-3 px-5"
-              href="#"
+              href="https://api.whatsapp.com/send/?phone=5216671792487&text=%C2%A1%C2%A1Hola%21%21+Deseo+informes+de+sus+servicios+psicoterapeuticos.&type=phone_number&app_absent=0"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Book Appointment
+              Reservar cita
             </a>
           </div>
         </div>
@@ -96,9 +98,11 @@ const Carousel = () => {
             </p>
             <a
               className="btn btn-primary rounded-pill text-white py-3 px-5"
-              href="#"
+              href="https://api.whatsapp.com/send/?phone=5216671792487&text=%C2%A1%C2%A1Hola%21%21+Deseo+informes+de+sus+servicios+psicoterapeuticos.&type=phone_number&app_absent=0"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Book Appointment
+              Reservar cita
             </a>
           </div>
         </div>
@@ -117,13 +121,15 @@ const Carousel = () => {
               Terapia para parejas, familias y relaciones
             </h1>
             <p className="mb-5 fs-5">
-              “Comunicación, vínculo y crecimiento en pareja o familia.”
+              "Comunicación, vínculo y crecimiento en pareja o familia."
             </p>
             <a
               className="btn btn-primary rounded-pill text-white py-3 px-5"
-              href="#"
+              href="https://api.whatsapp.com/send/?phone=5216671792487&text=%C2%A1%C2%A1Hola%21%21+Deseo+informes+de+sus+servicios+psicoterapeuticos.&type=phone_number&app_absent=0"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Book Appointment
+              Reservar cita
             </a>
           </div>
         </div>
