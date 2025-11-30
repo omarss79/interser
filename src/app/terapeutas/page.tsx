@@ -36,12 +36,12 @@ export default async function TerapeutasPage() {
           <div className="row g-4">
             {therapists.map((therapist) => (
               <div key={therapist.id} className="col-lg-4 col-md-6">
-                <Link
-                  href={`/${therapist.slug}`}
-                  className="text-decoration-none"
-                >
-                  <div className="card h-100 shadow-sm hover-shadow transition">
-                    <div className="card-body text-center">
+                <div className="card h-100 shadow-sm hover-shadow transition">
+                  <div className="card-body text-center">
+                    <Link
+                      href={`/${therapist.slug}`}
+                      className="text-decoration-none"
+                    >
                       {therapist.photo_url ? (
                         <div
                           className="position-relative mb-3 mx-auto"
@@ -83,36 +83,37 @@ export default async function TerapeutasPage() {
                           experiencia
                         </p>
                       )}
+                    </Link>
 
-                      <div className="d-flex gap-2 justify-content-center">
-                        {therapist.phone && (
-                          <a
-                            href={`tel:${therapist.phone}`}
-                            className="btn btn-sm btn-outline-primary"
-                          >
-                            <i className="bi bi-telephone-fill"></i>
-                          </a>
-                        )}
-                        {therapist.whatsapp && (
-                          <a
-                            href={`https://api.whatsapp.com/send?phone=${therapist.whatsapp}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="btn btn-sm btn-outline-success"
-                          >
-                            <i className="bi bi-whatsapp"></i>
-                          </a>
-                        )}
-                      </div>
-
-                      <div className="mt-3">
-                        <span className="btn btn-primary btn-sm">
-                          Ver perfil completo →
-                        </span>
-                      </div>
+                    <div className="d-flex gap-2 justify-content-center mb-3">
+                      {therapist.phone && (
+                        <a
+                          href={`tel:${therapist.phone}`}
+                          className="btn btn-sm btn-outline-primary"
+                        >
+                          <i className="bi bi-telephone-fill"></i>
+                        </a>
+                      )}
+                      {therapist.whatsapp && (
+                        <a
+                          href={`https://api.whatsapp.com/send?phone=${therapist.whatsapp}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn btn-sm btn-outline-success"
+                        >
+                          <i className="bi bi-whatsapp"></i>
+                        </a>
+                      )}
                     </div>
+
+                    <Link
+                      href={`/${therapist.slug}`}
+                      className="btn btn-primary btn-sm"
+                    >
+                      Ver perfil completo →
+                    </Link>
                   </div>
-                </Link>
+                </div>
               </div>
             ))}
           </div>
