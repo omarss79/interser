@@ -10,10 +10,7 @@ export default function TeamSection({ therapists }: TeamSectionProps) {
   return (
     <div className="container-fluid team py-5">
       <div className="container py-5">
-        <div
-          className="section-title mb-5 wow fadeInUp"
-          data-wow-delay="0.1s"
-        >
+        <div className="section-title mb-5 wow fadeInUp" data-wow-delay="0.1s">
           <div className="sub-style">
             <h4 className="sub-title px-3 mb-0">Conoce a nuestro equipo</h4>
           </div>
@@ -21,10 +18,9 @@ export default function TeamSection({ therapists }: TeamSectionProps) {
             Servicios Psicoterapéuticos de Terapeutas Profesionales
           </h1>
           <p className="mb-0">
-            Nuestro equipo de psicoterapeutas está comprometido con tu
-            bienestar emocional. Con amplia experiencia en enfoque humanista y
-            gestalt, estamos aquí para acompañarte en tu proceso de crecimiento
-            personal.
+            Nuestro equipo de psicoterapeutas está comprometido con tu bienestar
+            emocional. Con amplia experiencia en enfoque humanista y gestalt,
+            estamos aquí para acompañarte en tu proceso de crecimiento personal.
           </p>
         </div>
         <div className="row g-4 justify-content-center">
