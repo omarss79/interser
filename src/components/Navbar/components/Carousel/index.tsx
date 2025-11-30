@@ -55,56 +55,81 @@ const Carousel = () => {
   return (
     <div ref={carouselRef} className="header-carousel owl-carousel">
       <div className="header-carousel-item">
-        <img src="img/carousel-1.jpg" className="img-fluid w-100" alt="Image" />
+        <img
+          src="https://digitalizate.com.mx/public/interser/carousel/bienestar-ecomcional-integral.jpg"
+          className="img-fluid w-100"
+          alt="Image"
+        />
         <div className="carousel-caption">
           <div className="carousel-caption-content p-3">
-            <h5
-              className="text-white text-uppercase fw-bold mb-4"
-              style={{ letterSpacing: "3px" }}
-            >
-              Physiotherapy Center
-            </h5>
-            <h1 className="display-1 text-capitalize text-white mb-4">
-              Best Solution For Painful Life
+            <h1 className="display-1 text-white mb-4">
+              Bienestar Emocional Integral
             </h1>
             <p className="mb-5 fs-5">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry&apos;s standard dummy
-              text ever since the 1500s,
+              "Ansiedad, depresión, duelos… aquí te acompañamos para recuperar
+              tu equilibrio."
             </p>
             <a
               className="btn btn-primary rounded-pill text-white py-3 px-5"
-              href="#"
+              href="https://api.whatsapp.com/send/?phone=5216671792487&text=%C2%A1%C2%A1Hola%21%21+Deseo+informes+de+sus+servicios+psicoterapeuticos.&type=phone_number&app_absent=0"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Book Appointment
+              Reservar cita
             </a>
           </div>
         </div>
       </div>
 
       <div className="header-carousel-item">
-        <img src="img/carousel-2.jpg" className="img-fluid w-100" alt="Image" />
+        <img
+          src="https://digitalizate.com.mx/public/interser/carousel/terapia-gestalt-y- humanista.jpg"
+          className="img-fluid w-100"
+          alt="Image"
+        />
         <div className="carousel-caption">
           <div className="carousel-caption-content p-3">
-            <h5
-              className="text-white text-uppercase fw-bold mb-4"
-              style={{ letterSpacing: "3px" }}
-            >
-              Physiotherapy Center
-            </h5>
-            <h1 className="display-1 text-capitalize text-white mb-4">
-              Best Solution For Painful Life
+            <h1 className="display-1 text-white mb-4">
+              Terapia Gestalt & Humanista
             </h1>
             <p className="mb-5 fs-5">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry&apos;s standard dummy
-              text ever since the 1500s,
+              “Vive el aquí y ahora, reconecta con tus emociones y redescubre tu
+              autenticidad.”
             </p>
             <a
               className="btn btn-primary rounded-pill text-white py-3 px-5"
-              href="#"
+              href="https://api.whatsapp.com/send/?phone=5216671792487&text=%C2%A1%C2%A1Hola%21%21+Deseo+informes+de+sus+servicios+psicoterapeuticos.&type=phone_number&app_absent=0"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Book Appointment
+              Reservar cita
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div className="header-carousel-item">
+        <img
+          src="https://digitalizate.com.mx/public/interser/carousel/terapia-para-parejas-familias-y-relaciones.jpg
+"
+          className="img-fluid w-100"
+          alt="Image"
+        />
+        <div className="carousel-caption">
+          <div className="carousel-caption-content p-3">
+            <h1 className="display-1 text-white mb-4">
+              Terapia para parejas, familias y relaciones
+            </h1>
+            <p className="mb-5 fs-5">
+              "Comunicación, vínculo y crecimiento en pareja o familia."
+            </p>
+            <a
+              className="btn btn-primary rounded-pill text-white py-3 px-5"
+              href="https://api.whatsapp.com/send/?phone=5216671792487&text=%C2%A1%C2%A1Hola%21%21+Deseo+informes+de+sus+servicios+psicoterapeuticos.&type=phone_number&app_absent=0"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Reservar cita
             </a>
           </div>
         </div>

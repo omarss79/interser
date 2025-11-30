@@ -32,10 +32,13 @@ const Navbar = () => {
               <Link href="/acerca-de-interser" className="nav-item nav-link">
                 Acerca de InterSer
               </Link>
+              <Link href="/terapeutas" className="nav-item nav-link">
+                Terapeutas
+              </Link>
               <Link href="/servicios" className="nav-item nav-link">
                 Servicios
               </Link>
-              <Link href="/contact" className="nav-item nav-link">
+              <Link href="/contacto" className="nav-item nav-link">
                 Contacto
               </Link>
               <AuthMenu />

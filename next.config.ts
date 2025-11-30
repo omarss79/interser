@@ -3,6 +3,20 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   output: "standalone",
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "interser.org.mx",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "digitalizate.com.mx",
+        pathname: "/**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

@@ -158,8 +158,13 @@ export default function AuthMenu() {
         {pathname === "/" && (
           <>
             <div className="dropdown-divider" />
-            <a href="appointment.html" className="dropdown-item">
-              Appointment
+            <a
+              href="https://api.whatsapp.com/send/?phone=5216671792487&text=%C2%A1%C2%A1Hola%21%21+Deseo+informes+de+sus+servicios+psicoterapeuticos.&type=phone_number&app_absent=0"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="dropdown-item"
+            >
+              Agendar cita
             </a>
           </>
         )}
