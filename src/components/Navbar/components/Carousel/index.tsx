@@ -55,7 +55,11 @@ const Carousel = () => {
   return (
     <div ref={carouselRef} className="header-carousel owl-carousel">
       <div className="header-carousel-item">
-        <img src="img/carousel-1.jpg" className="img-fluid w-100" alt="Image" />
+        <img
+          src="https://digitalizate.com.mx/public/interser/carousel/bienestar-ecomcional-integral.jpg"
+          className="img-fluid w-100"
+          alt="Image"
+        />
         <div className="carousel-caption">
           <div className="carousel-caption-content p-3">
             <h1 className="display-1 text-white mb-4">
@@ -76,7 +80,11 @@ const Carousel = () => {
       </div>
 
       <div className="header-carousel-item">
-        <img src="img/carousel-2.jpg" className="img-fluid w-100" alt="Image" />
+        <img
+          src="https://digitalizate.com.mx/public/interser/carousel/terapia-gestalt-y- humanista.jpg"
+          className="img-fluid w-100"
+          alt="Image"
+        />
         <div className="carousel-caption">
           <div className="carousel-caption-content p-3">
             <h1 className="display-1 text-white mb-4">
@@ -97,7 +105,12 @@ const Carousel = () => {
       </div>
 
       <div className="header-carousel-item">
-        <img src="img/carousel-2.jpg" className="img-fluid w-100" alt="Image" />
+        <img
+          src="https://digitalizate.com.mx/public/interser/carousel/terapia-para-parejas-familias-y-relaciones.jpg
+"
+          className="img-fluid w-100"
+          alt="Image"
+        />
         <div className="carousel-caption">
           <div className="carousel-caption-content p-3">
             <h1 className="display-1 text-white mb-4">
