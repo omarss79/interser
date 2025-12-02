@@ -97,10 +97,15 @@ export async function getTherapistBySlug(
 
 /**
  * Obtiene todos los terapeutas públicos
+ * Usa un cliente sin autenticación para permitir generación estática
  */
 export async function getAllTherapists(): Promise<TherapistProfile[]> {
   try {
-    const supabase = await createClient();
+    // Crear cliente sin cookies para build time/static generation
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
 
     const { data: profiles, error } = await supabase
       .from("profiles")
