@@ -6,7 +6,7 @@ export default function ContactPage() {
     "Municipio de Culiacán 2673, Fraccionamiento Floresta, 80014 Culiacán Rosales, Sin.";
   const phone = "6671792487";
   const whatsapp = "6671792487";
-  const email = "contacto@interser.example"; // placeholder email
+  const email = "contacto@interser.org.mx"; // placeholder email
   const googleMapsUrl =
     "https://www.google.com/maps/place/InterSer/@24.8359529,-107.3661277,15.05z/data=!4m22!1m15!4m14!1m6!1m2!1s0x86bcd9a190906ed7:0x7aa4c1a84e9812d!2sInterSer,+Municipio+de+Culiacan,+Fraccionamiento+Floresta,+Culiac%C3%A1n,+Sinaloa!2m2!1d-107.3598355!2d24.8379294!1m6!1m2!1s0x86bcd9a190906ed7:0x7aa4c1a84e9812d!2sMunicipio+de+Culiacan+2673,+Fraccionamiento+Floresta,+80014+Culiac%C3%A1n+Rosales,+Sin.!2m2!1d-107.3598355!2d24.8379294!3m5!1s0x86bcd9a190906ed7:0x7aa4c1a84e9812d!8m2!3d24.8379294!4d-107.3598355!16s%2Fg%2F11skfw2r8d?entry=ttu&g_ep=EgoyMDI1MTExNy4wIKXMDSoASAFQAw%3D%3D";
 
