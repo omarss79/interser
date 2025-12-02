@@ -17,7 +17,10 @@ const Footer = () => {
           <div className="col-md-9 col-lg-9 col-xl-9">
             <div className="footer-item d-flex flex-column">
               <h4 className="text-white mb-4">
-                <i className="fas fa-star-of-life me-3"></i>Terapia
+                <img
+                  src="img/logo-interser.png"
+                  alt="Interser - Centro Psicoterapeutico Humanista"
+                />
               </h4>
               <p>
                 Acompañamos a personas, parejas y familias desde un enfoque

@@ -14,7 +14,10 @@ const Navbar = () => {
       <div className="container-fluid position-relative p-0">
         <nav className="navbar navbar-expand-lg navbar-light bg-white px-4 px-lg-5 py-3 py-lg-0">
           <a href="/" className="navbar-brand p-0">
-            <img src="img/logo-interser.png" alt="Logo" />
+            <img
+              src="img/logo-interser.png"
+              alt="Interser - Centro Psicoterapeutico Humanista"
+            />
           </a>
           <button
             className="navbar-toggler"
