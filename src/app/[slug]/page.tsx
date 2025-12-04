@@ -1,8 +1,13 @@
 import { notFound } from "next/navigation";
-import { getTherapistBySlug, getAllTherapistSlugs } from "@/utils/therapists";
+import {
+  getTherapistBySlug,
+  getAllTherapistSlugs,
+  getAllTherapists,
+} from "@/utils/therapists";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import BookAppointmentButton from "@/components/BookAppointmentButton";
 
 // Generar páginas estáticas para cada terapeuta
 export async function generateStaticParams() {
@@ -49,6 +54,9 @@ export default async function TherapistPage({
   if (!therapist) {
     notFound();
   }
+
+  // Obtener todos los terapeutas para el modal
+  const allTherapists = await getAllTherapists();
 
   const whatsappLink = therapist.whatsapp
     ? `https://api.whatsapp.com/send?phone=${therapist.whatsapp}&text=Hola, solicito informes para una consulta psicológica`
@@ -105,7 +113,11 @@ export default async function TherapistPage({
               )}
 
               {/* Botones de contacto */}
-              <div className="d-flex gap-3 mt-4">
+              <div className="d-flex gap-3 mt-4 flex-wrap">
+                <BookAppointmentButton
+                  therapist={therapist}
+                  allTherapists={allTherapists}
+                />
                 {therapist.phone && (
                   <a
                     href={`tel:${therapist.phone}`}
@@ -120,7 +132,7 @@ export default async function TherapistPage({
                     href={whatsappLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-success"
+                    className="btn btn-outline-success"
                   >
                     <i className="bi bi-whatsapp me-2"></i>
                     WhatsApp
@@ -235,13 +247,17 @@ export default async function TherapistPage({
             <p className="lead mb-4">
               Agenda una cita y da el primer paso hacia tu bienestar emocional
             </p>
-            <div className="d-flex gap-3 justify-content-center">
+            <div className="d-flex gap-3 justify-content-center flex-wrap">
+              <BookAppointmentButton
+                therapist={therapist}
+                allTherapists={allTherapists}
+              />
               {whatsappLink && (
                 <a
                   href={whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-success btn-lg"
+                  className="btn btn-outline-success btn-lg"
                 >
                   <i className="bi bi-whatsapp me-2"></i>
                   Agenda por WhatsApp
