@@ -268,13 +268,6 @@ async function checkAvailability(
 ): Promise<boolean> {
   const supabase = createClient();
 
-  console.log("Checking availability with params:", {
-    therapistId,
-    date,
-    startTime,
-    endTime,
-  });
-
   // Obtener todas las citas del terapeuta en esa fecha
   const { data, error } = await supabase
     .from("appointments")
@@ -289,8 +282,6 @@ async function checkAvailability(
     return true;
   }
 
-  console.log("Existing appointments:", data);
-
   // Verificar si hay conflicto con alguna cita existente
   const hasConflict = data?.some((apt) => {
     // Convertir tiempos a formato comparable
@@ -300,14 +291,9 @@ async function checkAvailability(
     // Hay conflicto si los rangos se solapan
     const conflict = startTime < existingEnd && endTime > existingStart;
 
-    if (conflict) {
-      console.log("Conflict found with appointment:", apt);
-    }
-
     return conflict;
   });
 
-  console.log("Has conflict:", hasConflict);
   return !hasConflict;
 }
 
@@ -345,24 +331,13 @@ export async function createAppointment(appointment: {
     };
   }
 
-  console.log("User authenticated:", userData.user.id);
-
   // Verificar disponibilidad primero
-  console.log("Checking availability for:", {
-    therapist_id: appointment.therapist_id,
-    date: appointment.appointment_date,
-    start_time: `${appointment.start_time}:00`,
-    end_time: end_time,
-  });
-
   const isAvailable = await checkAvailability(
     appointment.therapist_id,
     appointment.appointment_date,
     `${appointment.start_time}:00`,
     end_time
   );
-
-  console.log("Availability check result:", isAvailable);
 
   if (!isAvailable) {
     return {
@@ -383,16 +358,11 @@ export async function createAppointment(appointment: {
     notes: appointment.notes || null,
   };
 
-  console.log("Creating appointment with data:", appointmentData);
-
   const { data, error } = await supabase
     .from("appointments")
     .insert(appointmentData)
     .select()
     .single();
-
-  console.log("Insert result - data:", data);
-  console.log("Insert result - error:", error);
 
   if (error) {
     console.error("Error creating appointment:", error);

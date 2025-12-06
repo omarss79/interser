@@ -162,15 +162,6 @@ export default function AppointmentModal({
 
     setLoading(true);
     try {
-      console.log("Submitting appointment:", {
-        therapist_id: selectedTherapistId,
-        appointment_date: selectedDate,
-        start_time: selectedTime,
-        appointment_type: appointmentType,
-        notes: notes || undefined,
-        today: new Date().toISOString().split("T")[0],
-      });
-
       const result = await createAppointment({
         therapist_id: selectedTherapistId,
         appointment_date: selectedDate,
@@ -183,7 +174,7 @@ export default function AppointmentModal({
         // Obtener nombre del terapeuta
         const therapist = therapists.find((t) => t.id === selectedTherapistId);
         const therapistName = therapist
-          ? `${therapist.prefix || ""} ${therapist.full_name}`.trim()
+          ? `${therapist.title || ""} ${therapist.full_name}`.trim()
           : "Terapeuta";
 
         // Preparar datos de confirmación
