@@ -29,13 +29,14 @@ export async function sendAppointmentConfirmationEmails(
     const resend = new Resend(resendApiKey);
 
     // Formatear fecha
-    const formattedDate = new Date(data.appointmentDate + "T00:00:00")
-      .toLocaleDateString("es-MX", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      });
+    const formattedDate = new Date(
+      data.appointmentDate + "T00:00:00"
+    ).toLocaleDateString("es-MX", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
 
     // Formatear hora
     const [hour, minute] = data.appointmentTime.split(":");
@@ -226,60 +227,70 @@ export async function sendAppointmentConfirmationEmails(
 
     // Usar dominio de prueba de Resend si no está en producción
     // Cambiar a tu dominio verificado cuando esté listo
-    const fromEmail = process.env.NODE_ENV === "production" 
-      ? "InterSer <noreply@interser.org.mx>"
-      : "InterSer <onboarding@resend.dev>";
+    const fromEmail =
+      process.env.NODE_ENV === "production"
+        ? "InterSer <noreply@interser.org.mx>"
+        : "InterSer <onboarding@resend.dev>";
 
     console.log("Enviando desde:", fromEmail);
     console.log("Destinatarios:", {
       client: data.clientEmail,
       therapist: data.therapistEmail,
-      admin: adminEmail
+      admin: adminEmail,
     });
 
     // Enviar correos en paralelo
     const results = await Promise.allSettled([
       // Correo al cliente
-      resend.emails.send({
-        from: fromEmail,
-        to: data.clientEmail,
-        subject: "✓ Confirmación de Cita - InterSer",
-        html: clientEmailHtml,
-      }).then(result => {
-        console.log("Correo al cliente enviado:", result);
-        return result;
-      }).catch(error => {
-        console.error("Error enviando correo al cliente:", error);
-        throw error;
-      }),
-      
+      resend.emails
+        .send({
+          from: fromEmail,
+          to: data.clientEmail,
+          subject: "✓ Confirmación de Cita - InterSer",
+          html: clientEmailHtml,
+        })
+        .then((result) => {
+          console.log("Correo al cliente enviado:", result);
+          return result;
+        })
+        .catch((error) => {
+          console.error("Error enviando correo al cliente:", error);
+          throw error;
+        }),
+
       // Correo al terapeuta
-      resend.emails.send({
-        from: fromEmail,
-        to: data.therapistEmail,
-        subject: "📅 Nueva Cita Agendada - InterSer",
-        html: therapistEmailHtml,
-      }).then(result => {
-        console.log("Correo al terapeuta enviado:", result);
-        return result;
-      }).catch(error => {
-        console.error("Error enviando correo al terapeuta:", error);
-        throw error;
-      }),
-      
+      resend.emails
+        .send({
+          from: fromEmail,
+          to: data.therapistEmail,
+          subject: "📅 Nueva Cita Agendada - InterSer",
+          html: therapistEmailHtml,
+        })
+        .then((result) => {
+          console.log("Correo al terapeuta enviado:", result);
+          return result;
+        })
+        .catch((error) => {
+          console.error("Error enviando correo al terapeuta:", error);
+          throw error;
+        }),
+
       // Correo al administrador
-      resend.emails.send({
-        from: fromEmail,
-        to: adminEmail,
-        subject: "📊 Nueva Cita Registrada - InterSer",
-        html: adminEmailHtml,
-      }).then(result => {
-        console.log("Correo al admin enviado:", result);
-        return result;
-      }).catch(error => {
-        console.error("Error enviando correo al admin:", error);
-        throw error;
-      }),
+      resend.emails
+        .send({
+          from: fromEmail,
+          to: adminEmail,
+          subject: "📊 Nueva Cita Registrada - InterSer",
+          html: adminEmailHtml,
+        })
+        .then((result) => {
+          console.log("Correo al admin enviado:", result);
+          return result;
+        })
+        .catch((error) => {
+          console.error("Error enviando correo al admin:", error);
+          throw error;
+        }),
     ]);
 
     // Verificar resultados
@@ -287,7 +298,8 @@ export async function sendAppointmentConfirmationEmails(
       .filter((r) => r.status === "rejected")
       .map((r, index) => {
         const reason = (r as PromiseRejectedResult).reason;
-        const recipient = index === 0 ? "cliente" : index === 1 ? "terapeuta" : "admin";
+        const recipient =
+          index === 0 ? "cliente" : index === 1 ? "terapeuta" : "admin";
         console.error(`Error enviando correo a ${recipient}:`, reason);
         return { recipient, error: reason };
       });
@@ -302,17 +314,17 @@ export async function sendAppointmentConfirmationEmails(
         errors,
         partialSuccess: successCount > 0,
         successCount,
-        totalCount: 3
+        totalCount: 3,
       };
     }
 
     return { success: true, successCount: 3 };
   } catch (error: any) {
     console.error("Error crítico en sendAppointmentConfirmationEmails:", error);
-    return { 
-      success: false, 
+    return {
+      success: false,
       error: error.message || error,
-      stack: error.stack 
+      stack: error.stack,
     };
   }
 }

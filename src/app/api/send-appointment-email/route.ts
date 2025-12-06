@@ -12,10 +12,7 @@ export async function POST(request: NextRequest) {
     } = await supabase.auth.getUser();
 
     if (!user) {
-      return NextResponse.json(
-        { error: "No autorizado" },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: "No autorizado" }, { status: 401 });
     }
 
     const body = await request.json();
@@ -31,11 +28,13 @@ export async function POST(request: NextRequest) {
     // Obtener datos completos de la cita
     const { data: appointment, error: appointmentError } = await supabase
       .from("appointments")
-      .select(`
+      .select(
+        `
         *,
         client:profiles!appointments_client_id_fkey(id, full_name, email),
         therapist:profiles!appointments_therapist_id_fkey(id, full_name, email, title)
-      `)
+      `
+      )
       .eq("id", appointmentId)
       .single();
 
@@ -48,10 +47,7 @@ export async function POST(request: NextRequest) {
 
     // Verificar que el usuario sea el cliente de esta cita
     if (appointment.client_id !== user.id) {
-      return NextResponse.json(
-        { error: "No autorizado" },
-        { status: 403 }
-      );
+      return NextResponse.json({ error: "No autorizado" }, { status: 403 });
     }
 
     // Preparar datos para el correo
@@ -59,7 +55,7 @@ export async function POST(request: NextRequest) {
       appointmentId: appointment.id,
       clientName: appointment.client.full_name,
       clientEmail: appointment.client.email,
-      therapistName: appointment.therapist.title 
+      therapistName: appointment.therapist.title
         ? `${appointment.therapist.title} ${appointment.therapist.full_name}`
         : appointment.therapist.full_name,
       therapistEmail: appointment.therapist.email,
@@ -76,9 +72,10 @@ export async function POST(request: NextRequest) {
     if (!resendApiKey) {
       console.error("RESEND_API_KEY no está configurada");
       return NextResponse.json(
-        { 
+        {
           error: "Configuración de correo incompleta",
-          details: "RESEND_API_KEY no está configurada en las variables de entorno"
+          details:
+            "RESEND_API_KEY no está configurada en las variables de entorno",
         },
         { status: 500 }
       );

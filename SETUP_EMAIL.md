@@ -44,7 +44,8 @@ npm install resend
 ### Mientras tanto (desarrollo):
 
 Puedes usar el dominio de prueba de Resend:
-- Cambia `from: "InterSer <noreply@interser.org.mx>"` 
+
+- Cambia `from: "InterSer <noreply@interser.org.mx>"`
 - A `from: "InterSer <onboarding@resend.dev>"`
 - En el archivo `src/lib/email.ts`
 
@@ -62,18 +63,21 @@ Puedes usar el dominio de prueba de Resend:
 El sistema envía 3 correos diferentes:
 
 ### Cliente:
+
 - ✅ Confirmación de cita
 - 📅 Detalles completos
 - 📍 Instrucciones (presencial/online)
 - 🔗 Botón para contactar
 
 ### Terapeuta:
+
 - 📅 Nueva cita asignada
 - 👤 Datos del paciente
 - 📝 Notas del paciente
 - 🆔 ID de la cita
 
 ### Administrador:
+
 - 📊 Resumen de la cita
 - 👥 Cliente y terapeuta
 - 🆔 ID para referencia
@@ -81,6 +85,7 @@ El sistema envía 3 correos diferentes:
 ## 8. Personalización
 
 Puedes editar los templates HTML en `src/lib/email.ts`:
+
 - Colores
 - Logos (agregar imágenes)
 - Textos
@@ -89,6 +94,7 @@ Puedes editar los templates HTML en `src/lib/email.ts`:
 ## 9. Monitoreo
 
 En el dashboard de Resend puedes ver:
+
 - Correos enviados
 - Tasa de entrega
 - Errores
@@ -97,16 +103,19 @@ En el dashboard de Resend puedes ver:
 ## 10. Solución de problemas
 
 ### "Error sending emails"
+
 - Verifica que `RESEND_API_KEY` esté configurada
 - Verifica que la API key sea válida
 - Revisa los logs del servidor
 
 ### Correos no llegan
+
 - Verifica spam/correo no deseado
 - Verifica que el dominio esté verificado en Resend
 - Usa el dominio de prueba `onboarding@resend.dev` para testing
 
 ### Error 401 Unauthorized
+
 - La API key no está configurada o es inválida
 - Regenera la API key en Resend
 
