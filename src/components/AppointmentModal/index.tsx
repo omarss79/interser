@@ -12,6 +12,7 @@ import {
 } from "@/utils/appointments";
 import type { TherapistProfile } from "@/utils/therapists";
 import type { TimeSlot, AvailableDay } from "@/interfaces/appointments";
+import AppointmentConfirmationModal from "@/components/AppointmentConfirmationModal";
 
 interface AppointmentModalProps {
   show: boolean;
@@ -40,6 +41,14 @@ export default function AppointmentModal({
   const [loading, setLoading] = useState(false);
   const [currentDayIndex, setCurrentDayIndex] = useState(0);
   const [loadingSchedule, setLoadingSchedule] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [confirmedAppointment, setConfirmedAppointment] = useState<{
+    therapistName: string;
+    date: string;
+    time: string;
+    type: "presencial" | "online";
+    notes?: string;
+  } | null>(null);
 
   const daysToShow = 3; // Mostrar 3 días a la vez
 
@@ -171,12 +180,30 @@ export default function AppointmentModal({
       });
 
       if (result.success) {
-        toast.success("¡Cita agendada exitosamente!");
+        // Obtener nombre del terapeuta
+        const therapist = therapists.find((t) => t.id === selectedTherapistId);
+        const therapistName = therapist
+          ? `${therapist.prefix || ""} ${therapist.full_name}`.trim()
+          : "Terapeuta";
+
+        // Preparar datos de confirmación
+        setConfirmedAppointment({
+          therapistName,
+          date: selectedDate,
+          time: selectedTime,
+          type: appointmentType,
+          notes: notes || undefined,
+        });
+
+        // Cerrar modal de reserva y abrir modal de confirmación
         onHide();
+        setShowConfirmation(true);
+
         // Reset form
         setSelectedDate("");
         setSelectedTime("");
         setNotes("");
+        setSelectedTherapistId(preselectedTherapistId || "");
       } else {
         toast.error(result.error || "Error al agendar cita");
       }
@@ -193,239 +220,254 @@ export default function AppointmentModal({
     currentDayIndex + daysToShow
   );
 
-  if (!show) return null;
-
   return (
-    <div
-      className={`modal fade ${show ? "show d-block" : ""}`}
-      tabIndex={-1}
-      style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
-    >
-      <div className="modal-dialog modal-lg modal-dialog-centered">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Reservar Cita</h5>
-            <button
-              type="button"
-              className="btn-close"
-              onClick={onHide}
-              aria-label="Close"
-            ></button>
-          </div>
-          <div className="modal-body">
-            {/* Selector de Terapeuta */}
-            <div className="mb-4">
-              <label className="form-label fw-bold">
-                Selecciona un terapeuta
-              </label>
-              <select
-                className="form-select"
-                value={selectedTherapistId}
-                onChange={(e) => {
-                  setSelectedTherapistId(e.target.value);
-                  setCurrentDayIndex(0);
-                  setSelectedDate("");
-                  setSelectedTime("");
-                }}
-              >
-                <option value="">-- Selecciona un terapeuta --</option>
-                {therapists.map((therapist) => (
-                  <option key={therapist.id} value={therapist.id}>
-                    {therapist.title} {therapist.full_name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {loadingSchedule ? (
-              <div className="text-center py-5">
-                <div className="spinner-border text-primary" role="status">
-                  <span className="visually-hidden">Cargando...</span>
-                </div>
+    <>
+      {show && (
+        <div
+          className={`modal fade ${show ? "show d-block" : ""}`}
+          tabIndex={-1}
+          style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+        >
+          <div className="modal-dialog modal-lg modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Reservar Cita</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={onHide}
+                  aria-label="Close"
+                ></button>
               </div>
-            ) : selectedTherapistId ? (
-              <>
-                {/* Calendario de 3 días */}
+              <div className="modal-body">
+                {/* Selector de Terapeuta */}
                 <div className="mb-4">
-                  <div className="d-flex align-items-center justify-content-between mb-3">
-                    <label className="form-label fw-bold mb-0">
-                      Selecciona una fecha
-                    </label>
-                    <div className="btn-group btn-group-sm">
-                      <button
-                        className="btn btn-outline-secondary"
-                        onClick={handlePrevDays}
-                        disabled={currentDayIndex === 0}
-                      >
-                        <i className="fas fa-chevron-left"></i>
-                      </button>
-                      <button
-                        className="btn btn-outline-secondary"
-                        onClick={handleNextDays}
-                        disabled={
-                          currentDayIndex + daysToShow >= availableDays.length
-                        }
-                      >
-                        <i className="fas fa-chevron-right"></i>
-                      </button>
+                  <label className="form-label fw-bold">
+                    Selecciona un terapeuta
+                  </label>
+                  <select
+                    className="form-select"
+                    value={selectedTherapistId}
+                    onChange={(e) => {
+                      setSelectedTherapistId(e.target.value);
+                      setCurrentDayIndex(0);
+                      setSelectedDate("");
+                      setSelectedTime("");
+                    }}
+                  >
+                    <option value="">-- Selecciona un terapeuta --</option>
+                    {therapists.map((therapist) => (
+                      <option key={therapist.id} value={therapist.id}>
+                        {therapist.title} {therapist.full_name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {loadingSchedule ? (
+                  <div className="text-center py-5">
+                    <div className="spinner-border text-primary" role="status">
+                      <span className="visually-hidden">Cargando...</span>
                     </div>
                   </div>
-
-                  <div className="row g-2">
-                    {visibleDays.map((day) => (
-                      <div key={day.date} className="col-4">
-                        <button
-                          className={`btn w-100 ${
-                            selectedDate === day.date
-                              ? "btn-primary"
-                              : day.hasSchedule
-                              ? "btn-outline-primary"
-                              : "btn-outline-secondary"
-                          }`}
-                          onClick={() =>
-                            day.hasSchedule && setSelectedDate(day.date)
-                          }
-                          disabled={!day.hasSchedule}
-                        >
-                          <div className="small">{day.dayName}</div>
-                          <div className="fw-bold">
-                            {new Date(day.date + "T00:00:00").getDate()}
-                          </div>
-                          <div className="small">
-                            {new Date(
-                              day.date + "T00:00:00"
-                            ).toLocaleDateString("es-MX", { month: "short" })}
-                          </div>
-                        </button>
+                ) : selectedTherapistId ? (
+                  <>
+                    {/* Calendario de 3 días */}
+                    <div className="mb-4">
+                      <div className="d-flex align-items-center justify-content-between mb-3">
+                        <label className="form-label fw-bold mb-0">
+                          Selecciona una fecha
+                        </label>
+                        <div className="btn-group btn-group-sm">
+                          <button
+                            className="btn btn-outline-secondary"
+                            onClick={handlePrevDays}
+                            disabled={currentDayIndex === 0}
+                          >
+                            <i className="fas fa-chevron-left"></i>
+                          </button>
+                          <button
+                            className="btn btn-outline-secondary"
+                            onClick={handleNextDays}
+                            disabled={
+                              currentDayIndex + daysToShow >=
+                              availableDays.length
+                            }
+                          >
+                            <i className="fas fa-chevron-right"></i>
+                          </button>
+                        </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
 
-                {/* Horarios disponibles */}
-                {selectedDate && (
-                  <div className="mb-4">
-                    <label className="form-label fw-bold">
-                      Horarios disponibles
-                    </label>
-                    {timeSlots.length === 0 ? (
-                      <div className="alert alert-info">
-                        No hay horarios disponibles para este día
-                      </div>
-                    ) : (
                       <div className="row g-2">
-                        {timeSlots.map((slot) => (
-                          <div key={slot.time} className="col-3">
+                        {visibleDays.map((day) => (
+                          <div key={day.date} className="col-4">
                             <button
-                              className={`btn btn-sm w-100 ${
-                                selectedTime === slot.time
+                              className={`btn w-100 ${
+                                selectedDate === day.date
                                   ? "btn-primary"
-                                  : slot.available
+                                  : day.hasSchedule
                                   ? "btn-outline-primary"
                                   : "btn-outline-secondary"
                               }`}
                               onClick={() =>
-                                slot.available && setSelectedTime(slot.time)
+                                day.hasSchedule && setSelectedDate(day.date)
                               }
-                              disabled={!slot.available}
+                              disabled={!day.hasSchedule}
                             >
-                              {slot.time}
+                              <div className="small">{day.dayName}</div>
+                              <div className="fw-bold">
+                                {new Date(day.date + "T00:00:00").getDate()}
+                              </div>
+                              <div className="small">
+                                {new Date(
+                                  day.date + "T00:00:00"
+                                ).toLocaleDateString("es-MX", {
+                                  month: "short",
+                                })}
+                              </div>
                             </button>
                           </div>
                         ))}
                       </div>
+                    </div>
+
+                    {/* Horarios disponibles */}
+                    {selectedDate && (
+                      <div className="mb-4">
+                        <label className="form-label fw-bold">
+                          Horarios disponibles
+                        </label>
+                        {timeSlots.length === 0 ? (
+                          <div className="alert alert-info">
+                            No hay horarios disponibles para este día
+                          </div>
+                        ) : (
+                          <div className="row g-2">
+                            {timeSlots.map((slot) => (
+                              <div key={slot.time} className="col-3">
+                                <button
+                                  className={`btn btn-sm w-100 ${
+                                    selectedTime === slot.time
+                                      ? "btn-primary"
+                                      : slot.available
+                                      ? "btn-outline-primary"
+                                      : "btn-outline-secondary"
+                                  }`}
+                                  onClick={() =>
+                                    slot.available && setSelectedTime(slot.time)
+                                  }
+                                  disabled={!slot.available}
+                                >
+                                  {slot.time}
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     )}
+
+                    {/* Tipo de cita */}
+                    {selectedTime && (
+                      <>
+                        <div className="mb-4">
+                          <label className="form-label fw-bold">
+                            Tipo de cita
+                          </label>
+                          <div className="btn-group w-100" role="group">
+                            <input
+                              type="radio"
+                              className="btn-check"
+                              id="presencial"
+                              checked={appointmentType === "presencial"}
+                              onChange={() => setAppointmentType("presencial")}
+                            />
+                            <label
+                              className="btn btn-outline-primary"
+                              htmlFor="presencial"
+                            >
+                              <i className="fas fa-building me-2"></i>
+                              Presencial
+                            </label>
+
+                            <input
+                              type="radio"
+                              className="btn-check"
+                              id="online"
+                              checked={appointmentType === "online"}
+                              onChange={() => setAppointmentType("online")}
+                            />
+                            <label
+                              className="btn btn-outline-primary"
+                              htmlFor="online"
+                            >
+                              <i className="fas fa-laptop me-2"></i>
+                              Online
+                            </label>
+                          </div>
+                        </div>
+
+                        {/* Notas opcionales */}
+                        <div className="mb-3">
+                          <label className="form-label fw-bold">
+                            Notas (opcional)
+                          </label>
+                          <textarea
+                            className="form-control"
+                            rows={3}
+                            placeholder="Describe brevemente el motivo de tu consulta..."
+                            value={notes}
+                            onChange={(e) => setNotes(e.target.value)}
+                            maxLength={500}
+                          />
+                          <small className="text-muted">
+                            {notes.length}/500 caracteres
+                          </small>
+                        </div>
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <div className="alert alert-info">
+                    Por favor selecciona un terapeuta para ver horarios
+                    disponibles
                   </div>
                 )}
-
-                {/* Tipo de cita */}
-                {selectedTime && (
-                  <>
-                    <div className="mb-4">
-                      <label className="form-label fw-bold">Tipo de cita</label>
-                      <div className="btn-group w-100" role="group">
-                        <input
-                          type="radio"
-                          className="btn-check"
-                          id="presencial"
-                          checked={appointmentType === "presencial"}
-                          onChange={() => setAppointmentType("presencial")}
-                        />
-                        <label
-                          className="btn btn-outline-primary"
-                          htmlFor="presencial"
-                        >
-                          <i className="fas fa-building me-2"></i>
-                          Presencial
-                        </label>
-
-                        <input
-                          type="radio"
-                          className="btn-check"
-                          id="online"
-                          checked={appointmentType === "online"}
-                          onChange={() => setAppointmentType("online")}
-                        />
-                        <label
-                          className="btn btn-outline-primary"
-                          htmlFor="online"
-                        >
-                          <i className="fas fa-laptop me-2"></i>
-                          Online
-                        </label>
-                      </div>
-                    </div>
-
-                    {/* Notas opcionales */}
-                    <div className="mb-3">
-                      <label className="form-label fw-bold">
-                        Notas (opcional)
-                      </label>
-                      <textarea
-                        className="form-control"
-                        rows={3}
-                        placeholder="Describe brevemente el motivo de tu consulta..."
-                        value={notes}
-                        onChange={(e) => setNotes(e.target.value)}
-                        maxLength={500}
-                      />
-                      <small className="text-muted">
-                        {notes.length}/500 caracteres
-                      </small>
-                    </div>
-                  </>
-                )}
-              </>
-            ) : (
-              <div className="alert alert-info">
-                Por favor selecciona un terapeuta para ver horarios disponibles
               </div>
-            )}
-          </div>
-          <div className="modal-footer">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={onHide}
-            >
-              Cancelar
-            </button>
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={handleSubmit}
-              disabled={
-                !selectedTherapistId ||
-                !selectedDate ||
-                !selectedTime ||
-                loading
-              }
-            >
-              {loading ? "Agendando..." : "Confirmar cita"}
-            </button>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={onHide}
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleSubmit}
+                  disabled={
+                    !selectedTherapistId ||
+                    !selectedDate ||
+                    !selectedTime ||
+                    loading
+                  }
+                >
+                  {loading ? "Agendando..." : "Confirmar cita"}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+
+      {/* Modal de confirmación - Fuera del modal de reserva */}
+      <AppointmentConfirmationModal
+        show={showConfirmation}
+        onHide={() => setShowConfirmation(false)}
+        appointmentDetails={confirmedAppointment}
+      />
+    </>
   );
 }
