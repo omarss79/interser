@@ -272,7 +272,7 @@ async function checkAvailability(
     therapistId,
     date,
     startTime,
-    endTime
+    endTime,
   });
 
   // Obtener todas las citas del terapeuta en esa fecha
@@ -296,14 +296,14 @@ async function checkAvailability(
     // Convertir tiempos a formato comparable
     const existingStart = apt.start_time.substring(0, 8); // HH:MM:SS
     const existingEnd = apt.end_time.substring(0, 8);
-    
+
     // Hay conflicto si los rangos se solapan
-    const conflict = (startTime < existingEnd && endTime > existingStart);
-    
+    const conflict = startTime < existingEnd && endTime > existingStart;
+
     if (conflict) {
       console.log("Conflict found with appointment:", apt);
     }
-    
+
     return conflict;
   });
 
@@ -331,15 +331,18 @@ export async function createAppointment(appointment: {
     .padStart(2, "0")}:00`;
 
   const { data: userData, error: userError } = await supabase.auth.getUser();
-  
+
   if (userError) {
     console.error("Error getting user:", userError);
     return { success: false, error: "Error al verificar autenticación" };
   }
-  
+
   if (!userData.user) {
     console.error("No user found");
-    return { success: false, error: "Usuario no autenticado. Por favor inicia sesión nuevamente." };
+    return {
+      success: false,
+      error: "Usuario no autenticado. Por favor inicia sesión nuevamente.",
+    };
   }
 
   console.log("User authenticated:", userData.user.id);
@@ -349,7 +352,7 @@ export async function createAppointment(appointment: {
     therapist_id: appointment.therapist_id,
     date: appointment.appointment_date,
     start_time: `${appointment.start_time}:00`,
-    end_time: end_time
+    end_time: end_time,
   });
 
   const isAvailable = await checkAvailability(
@@ -387,7 +390,7 @@ export async function createAppointment(appointment: {
     .insert(appointmentData)
     .select()
     .single();
-  
+
   console.log("Insert result - data:", data);
   console.log("Insert result - error:", error);
 
