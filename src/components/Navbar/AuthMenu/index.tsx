@@ -142,13 +142,20 @@ export default function AuthMenu() {
         {user && (
           <>
             <a href="/profile" className="dropdown-item">
+              <i className="bi bi-person me-2"></i>
               Perfil
             </a>
+            <a href="/mis-citas" className="dropdown-item">
+              <i className="bi bi-calendar-check me-2"></i>
+              Mis Citas
+            </a>
             <a href="/update-password" className="dropdown-item">
+              <i className="bi bi-key me-2"></i>
               Cambiar contraseña
             </a>
             <hr className="dropdown-divider" />
             <a href="#" onClick={handleSignOut} className="dropdown-item">
+              <i className="bi bi-box-arrow-right me-2"></i>
               Cerrar sesión
             </a>
           </>
