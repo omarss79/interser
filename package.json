@@ -23,6 +23,7 @@
     "react-day-picker": "^9.9.0",
     "react-dom": "^19.1.2",
     "react-hot-toast": "^2.6.0",
+    "resend": "^4.8.0",
     "sass": "^1.94.2",
     "waypoints": "^4.0.1",
     "zod": "^4.1.8"

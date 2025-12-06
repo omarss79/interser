@@ -383,6 +383,25 @@ export async function createAppointment(appointment: {
     };
   }
 
+  // Enviar correos de confirmación (no esperamos el resultado para no bloquear)
+  try {
+    fetch("/api/send-appointment-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        appointmentId: data.id,
+      }),
+    }).catch((error) => {
+      console.error("Error sending confirmation emails:", error);
+      // No fallar la creación de la cita si el correo falla
+    });
+  } catch (error) {
+    console.error("Error triggering email send:", error);
+    // No fallar la creación de la cita si el correo falla
+  }
+
   return { success: true, appointmentId: data.id };
 }
 
