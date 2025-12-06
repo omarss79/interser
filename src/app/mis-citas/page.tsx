@@ -151,9 +151,7 @@ export default function MyAppointmentsPage() {
       text: status,
       class: "bg-secondary",
     };
-    return (
-      <span className={`badge ${badge.class}`}>{badge.text}</span>
-    );
+    return <span className={`badge ${badge.class}`}>{badge.text}</span>;
   };
 
   const canCancelAppointment = (appointment: Appointment) => {
@@ -161,10 +159,12 @@ export default function MyAppointmentsPage() {
       `${appointment.appointment_date}T${appointment.start_time}`
     );
     const now = new Date();
-    const hoursDiff = (appointmentDateTime.getTime() - now.getTime()) / (1000 * 60 * 60);
-    
+    const hoursDiff =
+      (appointmentDateTime.getTime() - now.getTime()) / (1000 * 60 * 60);
+
     return (
-      (appointment.status === "pending" || appointment.status === "confirmed") &&
+      (appointment.status === "pending" ||
+        appointment.status === "confirmed") &&
       hoursDiff > 24
     );
   };
@@ -225,7 +225,13 @@ export default function MyAppointmentsPage() {
       {appointments.length === 0 ? (
         <div className="alert alert-info">
           <i className="bi bi-info-circle me-2"></i>
-          No tienes citas {filter === "upcoming" ? "próximas" : filter === "past" ? "pasadas" : ""} registradas.
+          No tienes citas{" "}
+          {filter === "upcoming"
+            ? "próximas"
+            : filter === "past"
+              ? "pasadas"
+              : ""}{" "}
+          registradas.
         </div>
       ) : (
         <div className="row g-4">
@@ -265,7 +271,9 @@ export default function MyAppointmentsPage() {
                       </h5>
                       <div className="mb-2">
                         <i className="bi bi-calendar3 text-primary me-2"></i>
-                        <strong>{formatDate(appointment.appointment_date)}</strong>
+                        <strong>
+                          {formatDate(appointment.appointment_date)}
+                        </strong>
                       </div>
                       <div className="mb-2">
                         <i className="bi bi-clock text-primary me-2"></i>

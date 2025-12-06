@@ -125,7 +125,7 @@ export default function AuthMenu() {
         data-bs-toggle="dropdown"
         aria-expanded={false}
       >
-        {user ? user.email ?? "Mi cuenta" : "Iniciar sesión"}
+        {user ? (user.email ?? "Mi cuenta") : "Iniciar sesión"}
       </a>
       <div className="dropdown-menu m-0">
         {!user && (
