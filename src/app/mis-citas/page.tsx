@@ -25,9 +25,14 @@ export default function MyAppointmentsPage() {
   const [filter, setFilter] = useState<"all" | "upcoming" | "past">("upcoming");
   const [user, setUser] = useState<any>(null);
 
+  // Paginación
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [totalItems, setTotalItems] = useState(0);
+
   useEffect(() => {
     checkAuthAndLoadAppointments();
-  }, [filter]);
+  }, [filter, currentPage, itemsPerPage]);
 
   const checkAuthAndLoadAppointments = async () => {
     try {
@@ -53,6 +58,26 @@ export default function MyAppointmentsPage() {
     try {
       const today = new Date().toISOString().split("T")[0];
 
+      // Primero obtener el conteo total
+      let countQuery = supabase
+        .from("appointments")
+        .select("*", { count: "exact", head: true });
+
+      if (filter === "upcoming") {
+        countQuery = countQuery
+          .gte("appointment_date", today)
+          .in("status", ["pending", "confirmed"]);
+      } else if (filter === "past") {
+        countQuery = countQuery.lt("appointment_date", today);
+      }
+
+      const { count } = await countQuery;
+      setTotalItems(count || 0);
+
+      // Luego obtener los datos paginados
+      const from = (currentPage - 1) * itemsPerPage;
+      const to = from + itemsPerPage - 1;
+
       let query = supabase
         .from("appointments")
         .select(
@@ -67,7 +92,8 @@ export default function MyAppointmentsPage() {
         `
         )
         .order("appointment_date", { ascending: filter !== "past" })
-        .order("start_time", { ascending: true });
+        .order("start_time", { ascending: true })
+        .range(from, to);
 
       if (filter === "upcoming") {
         query = query
@@ -192,31 +218,67 @@ export default function MyAppointmentsPage() {
         </div>
       </div>
 
-      {/* Filtros */}
+      {/* Filtros y controles de paginación */}
       <div className="row mb-4">
-        <div className="col-12">
+        <div className="col-md-6 mb-3 mb-md-0">
           <div className="btn-group" role="group">
             <button
               type="button"
               className={`btn ${filter === "upcoming" ? "btn-primary" : "btn-outline-primary"}`}
-              onClick={() => setFilter("upcoming")}
+              onClick={() => {
+                setFilter("upcoming");
+                setCurrentPage(1);
+              }}
             >
               Próximas
             </button>
             <button
               type="button"
               className={`btn ${filter === "past" ? "btn-primary" : "btn-outline-primary"}`}
-              onClick={() => setFilter("past")}
+              onClick={() => {
+                setFilter("past");
+                setCurrentPage(1);
+              }}
             >
               Pasadas
             </button>
             <button
               type="button"
               className={`btn ${filter === "all" ? "btn-primary" : "btn-outline-primary"}`}
-              onClick={() => setFilter("all")}
+              onClick={() => {
+                setFilter("all");
+                setCurrentPage(1);
+              }}
             >
               Todas
             </button>
+          </div>
+        </div>
+
+        <div className="col-md-6 text-md-end">
+          <div className="d-flex justify-content-md-end align-items-center gap-2">
+            <label
+              htmlFor="itemsPerPage"
+              className="form-label mb-0 text-nowrap"
+            >
+              Mostrar:
+            </label>
+            <select
+              id="itemsPerPage"
+              className="form-select form-select-sm"
+              style={{ width: "auto" }}
+              value={itemsPerPage}
+              onChange={(e) => {
+                setItemsPerPage(Number(e.target.value));
+                setCurrentPage(1);
+              }}
+            >
+              <option value={5}>5 por página</option>
+              <option value={10}>10 por página</option>
+              <option value={15}>15 por página</option>
+              <option value={20}>20 por página</option>
+              <option value={50}>50 por página</option>
+            </select>
           </div>
         </div>
       </div>
@@ -324,6 +386,130 @@ export default function MyAppointmentsPage() {
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* Controles de paginación */}
+      {totalItems > 0 && (
+        <div className="row mt-4">
+          <div className="col-12">
+            <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
+              {/* Información de resultados */}
+              <div className="text-muted">
+                Mostrando{" "}
+                {Math.min((currentPage - 1) * itemsPerPage + 1, totalItems)} -{" "}
+                {Math.min(currentPage * itemsPerPage, totalItems)} de{" "}
+                {totalItems} {totalItems === 1 ? "cita" : "citas"}
+              </div>
+
+              {/* Navegación de páginas */}
+              {Math.ceil(totalItems / itemsPerPage) > 1 && (
+                <nav aria-label="Paginación de citas">
+                  <ul className="pagination mb-0">
+                    {/* Botón Primera página */}
+                    <li
+                      className={`page-item ${currentPage === 1 ? "disabled" : ""}`}
+                    >
+                      <button
+                        className="page-link"
+                        onClick={() => setCurrentPage(1)}
+                        disabled={currentPage === 1}
+                        aria-label="Primera página"
+                      >
+                        <i className="bi bi-chevron-double-left"></i>
+                      </button>
+                    </li>
+
+                    {/* Botón Anterior */}
+                    <li
+                      className={`page-item ${currentPage === 1 ? "disabled" : ""}`}
+                    >
+                      <button
+                        className="page-link"
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        aria-label="Página anterior"
+                      >
+                        <i className="bi bi-chevron-left"></i>
+                      </button>
+                    </li>
+
+                    {/* Números de página */}
+                    {(() => {
+                      const totalPages = Math.ceil(totalItems / itemsPerPage);
+                      const pages = [];
+                      const maxVisiblePages = 5;
+
+                      let startPage = Math.max(
+                        1,
+                        currentPage - Math.floor(maxVisiblePages / 2)
+                      );
+                      let endPage = Math.min(
+                        totalPages,
+                        startPage + maxVisiblePages - 1
+                      );
+
+                      if (endPage - startPage < maxVisiblePages - 1) {
+                        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                      }
+
+                      for (let i = startPage; i <= endPage; i++) {
+                        pages.push(
+                          <li
+                            key={i}
+                            className={`page-item ${i === currentPage ? "active" : ""}`}
+                          >
+                            <button
+                              className="page-link"
+                              onClick={() => setCurrentPage(i)}
+                            >
+                              {i}
+                            </button>
+                          </li>
+                        );
+                      }
+
+                      return pages;
+                    })()}
+
+                    {/* Botón Siguiente */}
+                    <li
+                      className={`page-item ${currentPage >= Math.ceil(totalItems / itemsPerPage) ? "disabled" : ""}`}
+                    >
+                      <button
+                        className="page-link"
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        disabled={
+                          currentPage >= Math.ceil(totalItems / itemsPerPage)
+                        }
+                        aria-label="Página siguiente"
+                      >
+                        <i className="bi bi-chevron-right"></i>
+                      </button>
+                    </li>
+
+                    {/* Botón Última página */}
+                    <li
+                      className={`page-item ${currentPage >= Math.ceil(totalItems / itemsPerPage) ? "disabled" : ""}`}
+                    >
+                      <button
+                        className="page-link"
+                        onClick={() =>
+                          setCurrentPage(Math.ceil(totalItems / itemsPerPage))
+                        }
+                        disabled={
+                          currentPage >= Math.ceil(totalItems / itemsPerPage)
+                        }
+                        aria-label="Última página"
+                      >
+                        <i className="bi bi-chevron-double-right"></i>
+                      </button>
+                    </li>
+                  </ul>
+                </nav>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </div>
