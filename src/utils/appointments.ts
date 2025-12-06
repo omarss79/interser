@@ -258,6 +258,60 @@ export function getAvailableDays(
 }
 
 /**
+ * Verifica si un horario específico está disponible
+ */
+async function checkAvailability(
+  therapistId: string,
+  date: string,
+  startTime: string,
+  endTime: string
+): Promise<boolean> {
+  const supabase = createClient();
+
+  console.log("Checking availability with params:", {
+    therapistId,
+    date,
+    startTime,
+    endTime
+  });
+
+  // Obtener todas las citas del terapeuta en esa fecha
+  const { data, error } = await supabase
+    .from("appointments")
+    .select("*")
+    .eq("therapist_id", therapistId)
+    .eq("appointment_date", date)
+    .in("status", ["pending", "confirmed"]);
+
+  if (error) {
+    console.error("Error checking availability:", error);
+    // En caso de error, asumimos que está disponible y dejamos que la DB lo valide
+    return true;
+  }
+
+  console.log("Existing appointments:", data);
+
+  // Verificar si hay conflicto con alguna cita existente
+  const hasConflict = data?.some((apt) => {
+    // Convertir tiempos a formato comparable
+    const existingStart = apt.start_time.substring(0, 8); // HH:MM:SS
+    const existingEnd = apt.end_time.substring(0, 8);
+    
+    // Hay conflicto si los rangos se solapan
+    const conflict = (startTime < existingEnd && endTime > existingStart);
+    
+    if (conflict) {
+      console.log("Conflict found with appointment:", apt);
+    }
+    
+    return conflict;
+  });
+
+  console.log("Has conflict:", hasConflict);
+  return !hasConflict;
+}
+
+/**
  * Crea una nueva cita
  */
 export async function createAppointment(appointment: {
@@ -276,30 +330,84 @@ export async function createAppointment(appointment: {
     .toString()
     .padStart(2, "0")}:00`;
 
-  const { data: userData } = await supabase.auth.getUser();
-  if (!userData.user) {
-    return { success: false, error: "Usuario no autenticado" };
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+  
+  if (userError) {
+    console.error("Error getting user:", userError);
+    return { success: false, error: "Error al verificar autenticación" };
   }
+  
+  if (!userData.user) {
+    console.error("No user found");
+    return { success: false, error: "Usuario no autenticado. Por favor inicia sesión nuevamente." };
+  }
+
+  console.log("User authenticated:", userData.user.id);
+
+  // Verificar disponibilidad primero
+  console.log("Checking availability for:", {
+    therapist_id: appointment.therapist_id,
+    date: appointment.appointment_date,
+    start_time: `${appointment.start_time}:00`,
+    end_time: end_time
+  });
+
+  const isAvailable = await checkAvailability(
+    appointment.therapist_id,
+    appointment.appointment_date,
+    `${appointment.start_time}:00`,
+    end_time
+  );
+
+  console.log("Availability check result:", isAvailable);
+
+  if (!isAvailable) {
+    return {
+      success: false,
+      error: "El horario seleccionado ya no está disponible",
+    };
+  }
+
+  const appointmentData = {
+    client_id: userData.user.id,
+    therapist_id: appointment.therapist_id,
+    appointment_date: appointment.appointment_date,
+    start_time: `${appointment.start_time}:00`,
+    end_time: end_time,
+    duration_minutes: 60,
+    status: "pending" as const,
+    appointment_type: appointment.appointment_type,
+    notes: appointment.notes || null,
+  };
+
+  console.log("Creating appointment with data:", appointmentData);
 
   const { data, error } = await supabase
     .from("appointments")
-    .insert({
-      client_id: userData.user.id,
-      therapist_id: appointment.therapist_id,
-      appointment_date: appointment.appointment_date,
-      start_time: `${appointment.start_time}:00`,
-      end_time: end_time,
-      duration_minutes: 60,
-      status: "pending",
-      appointment_type: appointment.appointment_type,
-      notes: appointment.notes,
-    })
+    .insert(appointmentData)
     .select()
     .single();
+  
+  console.log("Insert result - data:", data);
+  console.log("Insert result - error:", error);
 
   if (error) {
     console.error("Error creating appointment:", error);
-    return { success: false, error: error.message };
+    console.error("Error details:", JSON.stringify(error, null, 2));
+    return {
+      success: false,
+      error:
+        error.message ||
+        error.hint ||
+        "Error al crear la cita. Por favor intenta nuevamente.",
+    };
+  }
+
+  if (!data) {
+    return {
+      success: false,
+      error: "No se pudo crear la cita. Verifica tus permisos.",
+    };
   }
 
   return { success: true, appointmentId: data.id };

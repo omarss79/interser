@@ -153,6 +153,15 @@ export default function AppointmentModal({
 
     setLoading(true);
     try {
+      console.log("Submitting appointment:", {
+        therapist_id: selectedTherapistId,
+        appointment_date: selectedDate,
+        start_time: selectedTime,
+        appointment_type: appointmentType,
+        notes: notes || undefined,
+        today: new Date().toISOString().split('T')[0]
+      });
+      
       const result = await createAppointment({
         therapist_id: selectedTherapistId,
         appointment_date: selectedDate,
